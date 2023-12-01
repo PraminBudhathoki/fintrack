@@ -1,0 +1,38 @@
+name: fintrack
+description: A Goal plannner.
+publish_to: 'none'
+
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.1.5 <4.0.0'
+
+#----------------PACKAGES-------------------#
+dependencies:
+  flutter:
+    sdk: flutter
+
+
+  #Icons
+  cupertino_icons: ^1.0.2
+  iconsax: ^0.0.8
+
+  shared_preferences: ^2.0.10
+
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  flutter_lints: ^2.0.0
+
+flutter:
+
+  uses-material-design: true
+
+#----------------LOCAL ASSETS-------------------#
+  assets:
+    - assets/logos/F.png
+    - assets/logos/facebook-icon.png
+    - assets/logos/google-icon.png
+
