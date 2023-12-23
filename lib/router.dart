@@ -1,48 +1,26 @@
 import 'package:fintrack/features/authentication/views/login/login.dart';
+import 'package:fintrack/features/authentication/views/signup/signup.dart';
+import 'package:fintrack/features/authentication/views/signup/success_screen.dart';
 import 'package:flutter/material.dart';
 import 'constants/routing_manager.dart';
 
-/// The MaterialApp provides us with a property called generateRoute where.
-///
-///
-/// we can pass in a Function that returns a Route<dynamic> and takes in RouteSettings
-/// Thus for this purpose, we create a function named generateRoute
-///
-/// **params**:
-/// * `settings`: RouteSetting have been passed
-///
-/// **returns**:
-/// * `Route<dynamic>`: Return a Route
-Route<dynamic> generateRoute(RouteSettings settings) {
-  // The settings contains the route information of the requested route.
-  // It provides two key things to us: the name, and the arguments.
-  // We use the name to determine which view to return.
-  switch (settings.name) {
-    // Returns the loginScreen
-    case Routes.loginScreen:
-    //final int mainScreenIndex = settings.arguments! as int;
-      return MaterialPageRoute(
-        builder: (context) =>
-            StartScreen(
-              key: const Key('loginScreen'),
-            ),
-      );
+class RouteGenerator {
 
-    //Return the signup widget
-    case Routes.signupScreen:
-      return MaterialPageRoute(
-        builder: (context) =>
-            StartScreen(
-              key: const Key('loginScreen'),
-            ),
-      );
-
-    default:
-      return MaterialPageRoute(
-        builder: (context) =>
-            StartScreen(
-              key: const Key('loginScreen'),
-            ),
-      );
+  static Route<dynamic> generateRoutes(RouteSettings settings) {
+    switch(settings.name) {
+      case Routes.loginScreen:
+        return MaterialPageRoute(builder: (context) => StartScreen());
+      case Routes.signupScreen:
+        return MaterialPageRoute(builder: (context) => SignupScreen());
+      case Routes.successScreen:
+        return MaterialPageRoute(builder: (context) => SuccessScreen());
+         
+      default:
+        return MaterialPageRoute(builder: (context) => Scaffold(
+          body: Center(
+            child: Text("Not found ${settings.name}"),
+          ),
+        ));
+    }
   }
 }

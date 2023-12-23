@@ -3,6 +3,8 @@ import 'package:fintrack/features/authentication/views/signup/success_screen.dar
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 
+import '../../../../../services/navigation_service.dart';
+
 class SignupForm extends StatelessWidget {
   const SignupForm({
     super.key,
@@ -103,10 +105,7 @@ class SignupForm extends StatelessWidget {
                 width: double.infinity,
                 child: ElevatedButton(
                   onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => SuccessScreen()),
-                    );
+                    NavigationService().navigateToScreen(SuccessScreen());
                   },
                   child: Text(StringManager.signUp),
                 ),

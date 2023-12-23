@@ -1,13 +1,15 @@
-import 'package:fintrack/features/authentication/views/login/login.dart';
+import 'package:fintrack/constants/routing_manager.dart';
+import 'package:fintrack/services/navigation_service.dart';
 import 'package:flutter/material.dart';
-import 'package:fintrack/router.dart' as routes;
+import 'package:fintrack/router.dart';
 
 void main() {
   runApp(
-    const MaterialApp(
-      debugShowCheckedModeBanner: false,
-      initialRoute: '/',
-      onGenerateRoute: routes.generateRoute,
+     MaterialApp(
+       debugShowCheckedModeBanner: false,
+       initialRoute: Routes.loginScreen,
+       onGenerateRoute: RouteGenerator.generateRoutes,
+       navigatorKey: NavigationService().navigationKey,
     ),
   );
 }
