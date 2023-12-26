@@ -1,4 +1,6 @@
 import 'package:fintrack/constants/string_manager.dart';
+import 'package:fintrack/features/homepage/views/homepage.dart';
+import 'package:fintrack/services/navigation_service.dart';
 import 'package:flutter/material.dart';
 
 class SuccessScreen extends StatelessWidget {
@@ -46,7 +48,9 @@ class SuccessScreen extends StatelessWidget {
                     SizedBox(
                       width: double.infinity,
                       child: ElevatedButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          NavigationService().navigateToScreen(HomePage());
+                        },
                         child: const Text(StringManager.continueText),
                       ),
                     ),

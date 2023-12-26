@@ -1,9 +1,9 @@
+import 'package:fintrack/constants/routing_manager.dart';
 import 'package:fintrack/constants/string_manager.dart';
 import 'package:fintrack/features/authentication/views/signup/signup.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 import '../../../../../services/navigation_service.dart';
-
 class LoginForm extends StatelessWidget {
   const LoginForm({
     super.key,
