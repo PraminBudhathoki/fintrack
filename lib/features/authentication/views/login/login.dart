@@ -53,10 +53,12 @@ class StartScreen extends StatelessWidget {
                     child: IconButton(
                       onPressed: () {},
                       icon: const Image(
+                        height: 60,
                         image: AssetImage('assets/logos/facebook-icon.png'),
                       ),
                     ),
                   ),
+
                   ///Google
                   Container(
                     decoration: BoxDecoration(
@@ -65,11 +67,11 @@ class StartScreen extends StatelessWidget {
                     child: IconButton(
                       onPressed: () {},
                       icon: const Image(
+                        height: 60,
                         image: AssetImage('assets/logos/google-icon.png'),
                       ),
                     ),
                   ),
-
                 ],
               )
             ],

@@ -1,6 +1,7 @@
 import 'package:fintrack/features/authentication/views/login/login.dart';
 import 'package:fintrack/features/authentication/views/signup/signup.dart';
 import 'package:fintrack/features/authentication/views/signup/success_screen.dart';
+import 'package:fintrack/features/homepage/views/accounts1.dart';
 import 'package:fintrack/features/homepage/views/homepage.dart';
 import 'package:flutter/material.dart';
 import 'constants/routing_manager.dart';
@@ -14,7 +15,7 @@ Route<dynamic> generateRoutes(RouteSettings settings) {
     case Routes.successScreen:
       return MaterialPageRoute(builder: (context) => SuccessScreen());
     case Routes.Homepage:
-      return MaterialPageRoute(builder: (context) => HomePage());
+      return MaterialPageRoute(builder: (context) => One());
     default:
       return MaterialPageRoute(builder: (context) => Scaffold(
         body: Center(

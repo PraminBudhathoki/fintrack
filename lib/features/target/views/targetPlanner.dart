@@ -2,8 +2,10 @@ import 'package:fintrack/features/target/views/widget/Target_list.dart';
 import 'package:fintrack/features/target/views/widget/target.dart';
 import 'package:flutter/material.dart';
 
+import '../../homepage/views/drawer.dart';
+
 class TargetPlanner extends StatefulWidget {
-  const TargetPlanner({ super.key });
+  const TargetPlanner({super.key});
 
   @override
   _TargetPlannerState createState() => _TargetPlannerState();
@@ -15,6 +17,7 @@ class _TargetPlannerState extends State<TargetPlanner> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: const Cdrawer(),
       appBar: AppBar(
         title: const Text('Target'),
         centerTitle: true,
@@ -30,7 +33,7 @@ class _TargetPlannerState extends State<TargetPlanner> {
         onPressed: () {
           showAddGoalDialog(context);
         },
-        child: Icon(Icons.add),
+        child: const Icon(Icons.add),
       ),
     );
   }
@@ -45,20 +48,24 @@ class _TargetPlannerState extends State<TargetPlanner> {
         DateTime selectedDeadline = DateTime.now();
 
         return AlertDialog(
-          title: Text('Add Target'),
+          title: const Text('Add Target'),
           content: Container(
             child: Column(
               children: [
                 TextField(
                   controller: targetController,
-                  decoration: InputDecoration(labelText: 'Enter your Target'),
+                  decoration:
+                      const InputDecoration(labelText: 'Enter your Target'),
                 ),
                 TextField(
                   controller: amountController,
                   keyboardType: TextInputType.number,
-                  decoration: InputDecoration(labelText: 'Target Amount'),
+                  decoration: const InputDecoration(labelText: 'Target Amount'),
                 ),
                 ElevatedButton(
+                  style: const ButtonStyle(
+                    backgroundColor: MaterialStatePropertyAll(Colors.purple),
+                  ),
                   onPressed: () async {
                     DateTime? pickedDate = await showDatePicker(
                       context: context,
@@ -72,9 +79,15 @@ class _TargetPlannerState extends State<TargetPlanner> {
                       });
                     }
                   },
-                  child: Text("Select Date"),
+                  child: const Text(
+                    "Select Date",
+                    style: TextStyle(color: Colors.white),
+                  ),
                 ),
                 ElevatedButton(
+                  style: const ButtonStyle(
+                    backgroundColor: MaterialStatePropertyAll(Colors.purple),
+                  ),
                   onPressed: () async {
                     DateTime? pickedDeadline = await showDatePicker(
                       context: context,
@@ -82,13 +95,17 @@ class _TargetPlannerState extends State<TargetPlanner> {
                       firstDate: DateTime.now(),
                       lastDate: DateTime(2101),
                     );
-                    if (pickedDeadline != null && pickedDeadline != selectedDeadline) {
+                    if (pickedDeadline != null &&
+                        pickedDeadline != selectedDeadline) {
                       setState(() {
                         selectedDeadline = pickedDeadline;
                       });
                     }
                   },
-                  child: Text("Select Deadline"),
+                  child: const Text(
+                    "Select Deadline",
+                    style: TextStyle(color: Colors.white),
+                  ),
                 ),
               ],
             ),
@@ -98,7 +115,7 @@ class _TargetPlannerState extends State<TargetPlanner> {
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: Text('Cancel'),
+              child: const Text('Cancel'),
             ),
             TextButton(
               onPressed: () {
@@ -114,7 +131,7 @@ class _TargetPlannerState extends State<TargetPlanner> {
                 });
                 Navigator.of(context).pop();
               },
-              child: Text('Add'),
+              child: const Text('Add'),
             ),
           ],
         );

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:fintrack/features/homepage/views/homepage.dart';
+import '../homepage/views/drawer.dart';
 import 'Assets.dart';
 import 'liabialiaties.dart';
 
@@ -14,37 +14,28 @@ class Two extends StatelessWidget {
       home: DefaultTabController(
         length: 2,
         child: Scaffold(
+          drawer: const Cdrawer(),
           appBar: AppBar(
             bottom: const TabBar(
               tabs: [
                 Tab(
                     icon: Text(
                   "Asset",
-                  style: TextStyle(fontSize: 20),
+                  style: TextStyle(fontSize: 20, color: Colors.white),
                 )),
                 Tab(
                     icon: Text(
                   "Liabialiaties",
-                  style: TextStyle(fontSize: 20),
+                  style: TextStyle(fontSize: 20, color: Colors.white),
                 )),
               ],
             ),
             title: const Center(
                 child: Text(
               "Add       ",
-              style: TextStyle(fontSize: 25),
+              style: TextStyle(fontSize: 25, color: Colors.white),
             )),
-            backgroundColor: Colors.green,
-            leading: IconButton(
-              icon: const Icon(Icons.arrow_back),
-              onPressed: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (context) => const HomePage(),
-                  ),
-                );
-              },
-            ),
+            backgroundColor: Colors.purple,
           ),
           body: const TabBarView(
             children: [

@@ -87,6 +87,7 @@ class SignupForm extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 16),
+
               ///Password
               TextFormField(
                 obscureText: true,
@@ -104,10 +105,15 @@ class SignupForm extends StatelessWidget {
               SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor:
+                        Colors.purple, // Set the background color of the button
+                  ),
                   onPressed: () {
                     NavigationService().navigateToScreen(SuccessScreen());
                   },
-                  child: Text(StringManager.signUp),
+                  child: Text(StringManager.signUp,
+                      style: TextStyle(color: Colors.white)),
                 ),
               ),
             ],

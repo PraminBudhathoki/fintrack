@@ -92,6 +92,7 @@ class _AiconState extends State<Aicon> {
                 children: [
                   Text(
                     "Add category",
+                    style: TextStyle(color: Colors.purple),
                   ),
                 ],
               ),
@@ -126,6 +127,8 @@ class _AiconState extends State<Aicon> {
             Padding(
               padding: const EdgeInsets.all(6.0),
               child: ElevatedButton(
+                style: const ButtonStyle(
+                    backgroundColor: MaterialStatePropertyAll(Colors.purple)),
                 onPressed: () async {
                   DateTime? pickedDate = await showDatePicker(
                     context: context,
@@ -139,7 +142,10 @@ class _AiconState extends State<Aicon> {
                     });
                   }
                 },
-                child: const Text("Select Date"),
+                child: const Text(
+                  "Select Date",
+                  style: TextStyle(color: Colors.white),
+                ),
               ),
             ),
           ],

@@ -278,70 +278,60 @@ void _showBottomSheet(BuildContext context) {
       DateTime selectedDate = DateTime.now();
 
       return SingleChildScrollView(
-        child: SizedBox(
-          height: 310,
-          width: 50,
-          child: Column(
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: TextField(
-                  controller: dataToPass,
-                  autofocus: true,
-                  keyboardType: TextInputType.number,
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: TextField(
+                controller: dataToPass,
+                autofocus: true,
+                keyboardType: TextInputType.number,
 
-                  //inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                  decoration: InputDecoration(
-                    suffixIcon: IconButton(
-                      onPressed: () {
-                        // print(dataToPass.runtimeType);
-                        // print(dataToPass);
-                        // Navigator.push(
-                        //   context,
-                        //   MaterialPageRoute(
-                        //       builder: (context) =>
-                        //           Abs(dataToPass: dataToPass.text)),
-                        // );
-                      },
-                      icon: const Icon(Icons.add_box_rounded),
-                    ),
-                    hintStyle: const TextStyle(fontSize: 20),
-                    border: const OutlineInputBorder(),
-                    hintText: 'Enter amount.',
+                //inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                decoration: InputDecoration(
+                  suffixIcon: IconButton(
+                    onPressed: () {},
+                    icon: const Icon(Icons.add_box_rounded),
                   ),
+                  hintStyle: const TextStyle(fontSize: 20),
+                  border: const OutlineInputBorder(),
+                  hintText: 'Enter amount.',
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: TextField(
-                  controller: textController2,
-                  keyboardType: TextInputType.text,
-                  decoration: const InputDecoration(
-                    border: OutlineInputBorder(),
-                    hintText: 'Enter note',
-                  ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: TextField(
+                controller: textController2,
+                keyboardType: TextInputType.text,
+                decoration: const InputDecoration(
+                  border: OutlineInputBorder(),
+                  hintText: 'Enter note',
                 ),
               ),
-              ElevatedButton(
-                style: ButtonStyle(
-                  backgroundColor:
-                      MaterialStateProperty.all<Color>(Colors.blueGrey),
-                ),
-                onPressed: () async {
-                  DateTime? pickedDate = await showDatePicker(
-                    context: context,
-                    initialDate: selectedDate,
-                    firstDate: DateTime(2000),
-                    lastDate: DateTime(2121),
-                  );
-                  if (pickedDate != null && pickedDate != selectedDate) {
-                    selectedDate = pickedDate;
-                  }
-                },
-                child: const Text("Select Date"),
+            ),
+            ElevatedButton(
+              style: ButtonStyle(
+                backgroundColor:
+                    MaterialStateProperty.all<Color>(Colors.purple),
               ),
-            ],
-          ),
+              onPressed: () async {
+                DateTime? pickedDate = await showDatePicker(
+                  context: context,
+                  initialDate: selectedDate,
+                  firstDate: DateTime(2000),
+                  lastDate: DateTime(2121),
+                );
+                if (pickedDate != null && pickedDate != selectedDate) {
+                  selectedDate = pickedDate;
+                }
+              },
+              child: const Text(
+                "Select Date",
+                style: TextStyle(color: Colors.white),
+              ),
+            ),
+          ],
         ),
       );
     },

@@ -64,6 +64,7 @@ class SignupScreen extends StatelessWidget {
                     child: IconButton(
                       onPressed: () {},
                       icon: const Image(
+                        height: 60,
                         image: AssetImage('assets/logos/facebook-icon.png'),
                       ),
                     ),
@@ -77,6 +78,7 @@ class SignupScreen extends StatelessWidget {
                     child: IconButton(
                       onPressed: () {},
                       icon: const Image(
+                        height: 60,
                         image: AssetImage('assets/logos/google-icon.png'),
                       ),
                     ),

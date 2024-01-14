@@ -1,10 +1,8 @@
+import 'package:fintrack/features/homepage/views/drawer.dart';
 import 'package:flutter/material.dart';
-import 'package:fintrack/features/homepage/views/homepage.dart';
 
 class Four extends StatefulWidget {
-  final String title;
-
-  const Four({super.key, required this.title});
+  const Four({super.key});
 
   @override
   State<Four> createState() => _CalculatorState();
@@ -31,33 +29,11 @@ class _CalculatorState extends State<Four> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: const Cdrawer(),
       appBar: AppBar(
         toolbarHeight: 50,
-        backgroundColor: Colors.blue,
+        backgroundColor: Colors.purple,
         elevation: 10,
-        actions: const [
-          Padding(
-            padding: EdgeInsets.only(right: 15.0),
-            child: Icon(
-              Icons.info,
-              size: 30,
-              color: Colors.white,
-            ),
-          )
-        ],
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
-          onPressed: () {
-            // Add functionality to perform when the back button is pressed
-            Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (context) => const HomePage(
-                    //title: title
-                    ), // Pass data to the new screen if needed
-              ),
-            ); // Example: navigate back to the previous screen
-          },
-        ),
       ),
       body: body(),
     );
@@ -71,7 +47,7 @@ class _CalculatorState extends State<Four> {
           Container(
             height: 170,
             decoration: const BoxDecoration(
-              color: Colors.blue,
+              color: Colors.purple,
               borderRadius: BorderRadius.only(
                 bottomRight: Radius.circular(100),
               ),
@@ -129,7 +105,7 @@ class _CalculatorState extends State<Four> {
                     height: 60,
                     width: double.infinity,
                     decoration: BoxDecoration(
-                      color: Colors.blue,
+                      color: Colors.purple,
                       borderRadius: BorderRadius.circular(25),
                     ),
                     child: const Center(

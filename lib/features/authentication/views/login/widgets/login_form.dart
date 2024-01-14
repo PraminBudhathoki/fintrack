@@ -1,9 +1,9 @@
-import 'package:fintrack/constants/routing_manager.dart';
 import 'package:fintrack/constants/string_manager.dart';
 import 'package:fintrack/features/authentication/views/signup/signup.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 import '../../../../../services/navigation_service.dart';
+
 class LoginForm extends StatelessWidget {
   const LoginForm({
     super.key,
@@ -53,15 +53,22 @@ class LoginForm extends StatelessWidget {
                 ///RememberMe
                 Row(
                   children: [
-                    Checkbox(value: true, onChanged: (value) {}),
-                    const Text(StringManager.rememberMe),
+                    Checkbox(
+                        value: true,
+                        onChanged: (value) {},
+                        activeColor: Colors.purple),
+                    const Text(StringManager.rememberMe,
+                        style: TextStyle(color: Colors.purple)),
                   ],
                 ),
 
                 ///Forget Password
                 TextButton(
                   onPressed: () {},
-                  child: const Text(StringManager.forgetPassword),
+                  child: const Text(
+                    StringManager.forgetPassword,
+                    style: TextStyle(color: Colors.purple),
+                  ),
                 ),
               ],
             ),
@@ -70,8 +77,13 @@ class LoginForm extends StatelessWidget {
             SizedBox(
               width: double.infinity,
               child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor:
+                      Colors.purple, // Set the background color of the button
+                ),
                 onPressed: () {},
-                child: Text(StringManager.signIn),
+                child: const Text(StringManager.signIn,
+                    style: TextStyle(color: Colors.white)),
               ),
             ),
 
@@ -79,10 +91,15 @@ class LoginForm extends StatelessWidget {
             SizedBox(
               width: double.infinity,
               child: OutlinedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor:
+                      Colors.purple, // Set the background color of the button
+                ),
                 onPressed: () {
-                  NavigationService().navigateToScreen(SignupScreen());
+                  NavigationService().navigateToScreen(const SignupScreen());
                 },
-                child: Text(StringManager.createAccount),
+                child: const Text(StringManager.createAccount,
+                    style: TextStyle(color: Colors.white)),
               ),
             ),
           ],

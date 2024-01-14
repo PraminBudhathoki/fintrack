@@ -656,19 +656,16 @@ void _showBottomSheet(BuildContext context) {
       final textController2 = TextEditingController();
       //DateTime selectedDeadline = DateTime.now();
       DateTime selectedDate = DateTime.now();
-      
 
       return SingleChildScrollView(
         child: SizedBox(
           height: 310,
-          width: 50,
+          //width: 50,
           child: Column(
             children: [
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: TextField(
-                  
-                  
                   //style: TextStyle(color: Colors.green),
                   controller: dataToPass,
                   autofocus: true,
@@ -707,7 +704,7 @@ void _showBottomSheet(BuildContext context) {
               ElevatedButton(
                 style: ButtonStyle(
                   backgroundColor:
-                      MaterialStateProperty.all<Color>(Colors.blueGrey),
+                      MaterialStateProperty.all<Color>(Colors.purple),
                 ),
                 onPressed: () async {
                   DateTime? pickedDate = await showDatePicker(
@@ -720,7 +717,10 @@ void _showBottomSheet(BuildContext context) {
                     selectedDate = pickedDate;
                   }
                 },
-                child: const Text("Select Date"),
+                child: const Text(
+                  "Select Date",
+                  style: TextStyle(color: Colors.white),
+                ),
               ),
             ],
           ),

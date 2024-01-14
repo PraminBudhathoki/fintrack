@@ -1,6 +1,6 @@
 import 'package:fintrack/features/incomeExpenses/expenses.dart';
 import 'package:flutter/material.dart';
-import 'package:fintrack/features/homepage/views/homepage.dart';
+import '../homepage/views/drawer.dart';
 import 'Income.dart';
 
 class Three extends StatelessWidget {
@@ -14,6 +14,7 @@ class Three extends StatelessWidget {
       home: DefaultTabController(
         length: 2,
         child: Scaffold(
+          drawer: const Cdrawer(),
           appBar: AppBar(
             bottom: const TabBar(
               tabs: [
@@ -34,17 +35,7 @@ class Three extends StatelessWidget {
               "ADD         ",
               style: TextStyle(fontSize: 20, color: Colors.white),
             )),
-            backgroundColor: Colors.teal.shade800,
-            leading: IconButton(
-              icon: const Icon(Icons.arrow_back, color: Colors.white),
-              onPressed: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (context) => const HomePage(),
-                  ),
-                );
-              },
-            ),
+            backgroundColor: Colors.purple,
           ),
           body: const TabBarView(
             children: [

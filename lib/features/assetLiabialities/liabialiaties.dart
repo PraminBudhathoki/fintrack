@@ -74,6 +74,7 @@ class _LiconState extends State<Licon> {
                 children: [
                   Text(
                     "Add category",
+                    style: TextStyle(color: Colors.purple),
                   ),
                 ],
               ),
@@ -108,6 +109,8 @@ class _LiconState extends State<Licon> {
             Padding(
               padding: const EdgeInsets.all(6.0),
               child: ElevatedButton(
+                style: const ButtonStyle(
+                    backgroundColor: MaterialStatePropertyAll(Colors.purple)),
                 onPressed: () async {
                   DateTime? pickedDate = await showDatePicker(
                     context: context,
@@ -121,7 +124,10 @@ class _LiconState extends State<Licon> {
                     });
                   }
                 },
-                child: const Text("Select Date"),
+                child: const Text(
+                  "Select Date",
+                  style: TextStyle(color: Colors.white),
+                ),
               ),
             ),
           ],
