@@ -3,8 +3,8 @@ import 'package:fintrack/features/authentication/views/login/widgets/login_Heade
 import 'package:fintrack/features/authentication/views/login/widgets/login_form.dart';
 import 'package:flutter/material.dart';
 
-class StartScreen extends StatelessWidget {
-  const StartScreen({super.key});
+class LoginScreen extends StatelessWidget {
+  const LoginScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
