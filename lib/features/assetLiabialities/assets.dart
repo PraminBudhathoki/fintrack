@@ -23,11 +23,7 @@ class _AiconState extends State<Aicon> {
   @override
   Widget build(BuildContext context) {
     DateTime selectedDate = DateTime.now();
-
-    // here, Scaffold.of(context) returns null
-    return Scaffold(
-        //appBar: AppBar(title: const Text('Demo')),
-        body: Builder(
+    return Scaffold(body: Builder(
       builder: (BuildContext context) {
         return ListView(
           padding: const EdgeInsets.all(6),

@@ -7,6 +7,7 @@ import '../../target/views/targetPlanner.dart';
 import 'accounts1.dart';
 import 'calculator.dart';
 import 'contactus.dart';
+import 'history.dart';
 import 'info.dart';
 
 class Cdrawer extends StatelessWidget {
@@ -202,7 +203,7 @@ class Cdrawer extends StatelessWidget {
                   // Navigate to a new screen when the section is tapped
                   Navigator.of(context).push(
                     MaterialPageRoute(
-                      builder: (context) => const TargetPlanner(),
+                      builder: (context) => History(),
                     ),
                   );
                 },

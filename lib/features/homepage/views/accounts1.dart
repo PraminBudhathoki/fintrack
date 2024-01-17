@@ -14,14 +14,6 @@ class One extends StatelessWidget {
     return Scaffold(
       drawer: const Cdrawer(),
       appBar: AppBar(
-        // leading: IconButton(
-        //   icon: Icon(Icons.menu),
-        //   color: Colors.white,
-        //   tooltip: MaterialLocalizations.of(context).openAppDrawerTooltip,
-        //   onPressed: () {
-        //     Scaffold.of(context).openDrawer();
-        //   },
-        // ),
         title: const Text(
           "Accounts",
           style: TextStyle(color: Colors.white),
@@ -48,68 +40,145 @@ class One extends StatelessWidget {
               children: <Widget>[
                 Row(
                   children: [
-                    InkWell(
-                      onTap: () {
-                        // Handle button tap for "Total portfolio"
-                        print("Total portfolio tapped");
-                      },
-                      child: Container(
-                        color: Colors.blueGrey,
-                        width: 130,
-                        height: 140,
-                        child: const Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            Icon(Icons.attach_money,
-                                size: 50, color: Colors.white),
-                            SizedBox(height: 8),
-                            Text(
-                              "Total portfolio : ",
-                              textScaleFactor: 1.3,
-                              style: TextStyle(color: Colors.white),
-                            ),
-                            Text(
-                              "Rs$value",
-                              textScaleFactor: 1.3,
-                              style: TextStyle(color: Colors.white),
-                            ),
-                          ],
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: InkWell(
+                        onTap: () {
+                          // Handle button tap for "Total portfolio"
+                          print("Total portfolio tapped");
+                        },
+                        child: Container(
+                          color: Colors.blueGrey,
+                          width: 130,
+                          height: 140,
+                          child: const Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              Icon(Icons.attach_money,
+                                  size: 50, color: Colors.white),
+                              SizedBox(height: 8),
+                              Text(
+                                "Income : ",
+                                textScaleFactor: 1.3,
+                                style: TextStyle(color: Colors.white),
+                              ),
+                              Text(
+                                "Rs$value",
+                                textScaleFactor: 1.3,
+                                style: TextStyle(color: Colors.white),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     ),
-                    InkWell(
-                      onTap: () {
-                        // Handle button tap for "Cash available"
-                        print("Cash available tapped");
-                      },
-                      child: Container(
-                        color: Colors.blueGrey,
-                        width: 130,
-                        height: 140,
-                        child: const Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            Icon(
-                              Icons.money,
-                              size: 50,
-                              color: Colors.white,
-                            ),
-                            SizedBox(height: 8),
-                            Text(
-                              "Cash available :",
-                              textScaleFactor: 1.3,
-                              style: TextStyle(color: Colors.white),
-                            ),
-                            Text(
-                              "Rs$value",
-                              textScaleFactor: 1.3,
-                              style: TextStyle(color: Colors.white),
-                            ),
-                          ],
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: InkWell(
+                        onTap: () {
+                          // Handle button tap for "Cash available"
+                          print("Cash available tapped");
+                        },
+                        child: Container(
+                          color: Colors.blueGrey,
+                          width: 130,
+                          height: 140,
+                          child: const Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              Icon(
+                                Icons.money,
+                                size: 50,
+                                color: Colors.white,
+                              ),
+                              SizedBox(height: 8),
+                              Text(
+                                "Expenses :",
+                                textScaleFactor: 1.3,
+                                style: TextStyle(color: Colors.white),
+                              ),
+                              Text(
+                                "Rs$value",
+                                textScaleFactor: 1.3,
+                                style: TextStyle(color: Colors.white),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     ),
                   ],
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
+                    children: [
+                      InkWell(
+                        onTap: () {
+                          // Handle button tap for "Total portfolio"
+                          print("Total portfolio tapped");
+                        },
+                        child: Container(
+                          color: Colors.blueGrey,
+                          width: 130,
+                          height: 140,
+                          child: const Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              Icon(Icons.attach_money,
+                                  size: 50, color: Colors.white),
+                              SizedBox(height: 8),
+                              Text(
+                                "Balance : ",
+                                textScaleFactor: 1.3,
+                                style: TextStyle(color: Colors.white),
+                              ),
+                              Text(
+                                "Rs$value",
+                                textScaleFactor: 1.3,
+                                style: TextStyle(color: Colors.white),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: InkWell(
+                          onTap: () {
+                            // Handle button tap for "Cash available"
+                            print("Cash available tapped");
+                          },
+                          child: Container(
+                            color: Colors.blueGrey,
+                            width: 130,
+                            height: 140,
+                            child: const Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: <Widget>[
+                                Icon(
+                                  Icons.money,
+                                  size: 50,
+                                  color: Colors.white,
+                                ),
+                                SizedBox(height: 8),
+                                Text(
+                                  "Total balance :",
+                                  textScaleFactor: 1.3,
+                                  style: TextStyle(color: Colors.white),
+                                ),
+                                Text(
+                                  "Rs$value",
+                                  textScaleFactor: 1.3,
+                                  style: TextStyle(color: Colors.white),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
                 const PieChart(
                   dataMap: {
