@@ -32,13 +32,14 @@ class One extends StatelessWidget {
       body: SingleChildScrollView(
         child: Center(
           child: Padding(
-            padding: const EdgeInsets.all(5.0),
+            padding: const EdgeInsets.all(8.0),
             child: Wrap(
               alignment: WrapAlignment.center,
               spacing: 8.0,
               crossAxisAlignment: WrapCrossAlignment.center,
               children: <Widget>[
                 Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Padding(
                       padding: const EdgeInsets.all(8.0),
@@ -49,7 +50,7 @@ class One extends StatelessWidget {
                         },
                         child: Container(
                           color: Colors.blueGrey,
-                          width: 130,
+                          width: 150,
                           height: 140,
                           child: const Column(
                             mainAxisAlignment: MainAxisAlignment.center,
@@ -81,7 +82,7 @@ class One extends StatelessWidget {
                         },
                         child: Container(
                           color: Colors.blueGrey,
-                          width: 130,
+                          width: 150,
                           height: 140,
                           child: const Column(
                             mainAxisAlignment: MainAxisAlignment.center,
@@ -109,18 +110,19 @@ class One extends StatelessWidget {
                     ),
                   ],
                 ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Row(
-                    children: [
-                      InkWell(
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: InkWell(
                         onTap: () {
                           // Handle button tap for "Total portfolio"
                           print("Total portfolio tapped");
                         },
                         child: Container(
                           color: Colors.blueGrey,
-                          width: 130,
+                          width: 150,
                           height: 140,
                           child: const Column(
                             mainAxisAlignment: MainAxisAlignment.center,
@@ -142,43 +144,43 @@ class One extends StatelessWidget {
                           ),
                         ),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: InkWell(
-                          onTap: () {
-                            // Handle button tap for "Cash available"
-                            print("Cash available tapped");
-                          },
-                          child: Container(
-                            color: Colors.blueGrey,
-                            width: 130,
-                            height: 140,
-                            child: const Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: <Widget>[
-                                Icon(
-                                  Icons.money,
-                                  size: 50,
-                                  color: Colors.white,
-                                ),
-                                SizedBox(height: 8),
-                                Text(
-                                  "Total balance :",
-                                  textScaleFactor: 1.3,
-                                  style: TextStyle(color: Colors.white),
-                                ),
-                                Text(
-                                  "Rs$value",
-                                  textScaleFactor: 1.3,
-                                  style: TextStyle(color: Colors.white),
-                                ),
-                              ],
-                            ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: InkWell(
+                        onTap: () {
+                          // Handle button tap for "Cash available"
+                          print("Cash available tapped");
+                        },
+                        child: Container(
+                          color: Colors.blueGrey,
+                          width: 150,
+                          height: 140,
+                          child: const Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              Icon(
+                                Icons.money,
+                                size: 50,
+                                color: Colors.white,
+                              ),
+                              SizedBox(height: 8),
+                              Text(
+                                "Total balance :",
+                                textScaleFactor: 1.3,
+                                style: TextStyle(color: Colors.white),
+                              ),
+                              Text(
+                                "Rs$value",
+                                textScaleFactor: 1.3,
+                                style: TextStyle(color: Colors.white),
+                              ),
+                            ],
                           ),
                         ),
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
                 const PieChart(
                   dataMap: {

@@ -19,6 +19,8 @@ dependencies:
   pie_chart: ^5.4.0
   google_fonts: ^2.1.0
   font_awesome_flutter: ^10.6.0
+  http: ^0.13.6
+  provider: ^6.1.1
 
 
 

@@ -1,5 +1,7 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:http/http.dart' as http;
 
 class Income extends StatelessWidget {
   const Income({super.key});
@@ -21,6 +23,7 @@ class Iicon extends StatefulWidget {
 }
 
 class _IiconState extends State<Iicon> {
+  int index = 0;
   @override
   Widget build(BuildContext context) {
     return GridView.count(
@@ -47,7 +50,8 @@ class _IiconState extends State<Iicon> {
               ],
             ),
             onTap: () {
-              _showBottomSheet(context);
+              index = 1;
+              _showBottomSheet(context, index);
             },
           ),
         ),
@@ -70,7 +74,8 @@ class _IiconState extends State<Iicon> {
               ],
             ),
             onTap: () {
-              _showBottomSheet(context);
+              index = 2;
+              _showBottomSheet(context, index);
             },
           ),
         ),
@@ -92,7 +97,8 @@ class _IiconState extends State<Iicon> {
               ],
             ),
             onTap: () {
-              _showBottomSheet(context);
+              index = 3;
+              _showBottomSheet(context, index);
             },
           ),
         ),
@@ -117,7 +123,8 @@ class _IiconState extends State<Iicon> {
               ],
             ),
             onTap: () {
-              _showBottomSheet(context);
+              index = 4;
+              _showBottomSheet(context, index);
             },
           ),
         ),
@@ -140,7 +147,8 @@ class _IiconState extends State<Iicon> {
               ],
             ),
             onTap: () {
-              _showBottomSheet(context);
+              index = 5;
+              _showBottomSheet(context, index);
             },
           ),
         ),
@@ -162,7 +170,8 @@ class _IiconState extends State<Iicon> {
               ],
             ),
             onTap: () {
-              _showBottomSheet(context);
+              index = 6;
+              _showBottomSheet(context, index);
             },
           ),
         ),
@@ -185,7 +194,8 @@ class _IiconState extends State<Iicon> {
               ],
             ),
             onTap: () {
-              _showBottomSheet(context);
+              index = 7;
+              _showBottomSheet(context, index);
             },
           ),
         ),
@@ -213,7 +223,8 @@ class _IiconState extends State<Iicon> {
               ],
             ),
             onTap: () {
-              _showBottomSheet(context);
+              index = 8;
+              _showBottomSheet(context, index);
             },
           ),
         ),
@@ -236,7 +247,8 @@ class _IiconState extends State<Iicon> {
               ],
             ),
             onTap: () {
-              _showBottomSheet(context);
+              index = 9;
+              _showBottomSheet(context, index);
             },
           ),
         ),
@@ -258,7 +270,9 @@ class _IiconState extends State<Iicon> {
               ],
             ),
             onTap: () {
-              _showBottomSheet(context);
+              index = 10;
+              //_showBottomSheet(context);
+              _showBottomSheet(context, index);
             },
           ),
         ),
@@ -267,15 +281,38 @@ class _IiconState extends State<Iicon> {
   }
 }
 
-void _showBottomSheet(BuildContext context) {
+void _showBottomSheet(BuildContext context, int index) {
   showModalBottomSheet(
     context: context,
     builder: (BuildContext context) {
       //use this controller to get what the user typed.
-      final dataToPass = TextEditingController();
-      final textController2 = TextEditingController();
+      final amount = TextEditingController();
+      final note = TextEditingController();
       //DateTime selectedDeadline = DateTime.now();
       DateTime selectedDate = DateTime.now();
+      String category = " ";
+      String type = "Income";
+      if (index == 1) {
+        category = "Salary";
+      } else if (index == 2) {
+        category = "Refunds";
+      } else if (index == 3) {
+        category = "Grants";
+      } else if (index == 4) {
+        category = "Investment";
+      } else if (index == 5) {
+        category = "Rental";
+      } else if (index == 6) {
+        category = "Lottery";
+      } else if (index == 7) {
+        category = "Awards";
+      } else if (index == 8) {
+        category = "Dividends";
+      } else if (index == 9) {
+        category = "Sale";
+      } else {
+        category = "Others";
+      }
 
       return SingleChildScrollView(
         child: Column(
@@ -283,10 +320,9 @@ void _showBottomSheet(BuildContext context) {
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: TextField(
-                controller: dataToPass,
+                controller: amount,
                 autofocus: true,
                 keyboardType: TextInputType.number,
-
                 //inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                 decoration: InputDecoration(
                   suffixIcon: IconButton(
@@ -302,38 +338,87 @@ void _showBottomSheet(BuildContext context) {
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: TextField(
-                controller: textController2,
+                controller: note,
                 keyboardType: TextInputType.text,
                 decoration: const InputDecoration(
                   border: OutlineInputBorder(),
+                  hintStyle: TextStyle(fontSize: 20),
                   hintText: 'Enter note',
                 ),
               ),
             ),
-            ElevatedButton(
-              style: ButtonStyle(
-                backgroundColor:
-                    MaterialStateProperty.all<Color>(Colors.purple),
-              ),
-              onPressed: () async {
-                DateTime? pickedDate = await showDatePicker(
-                  context: context,
-                  initialDate: selectedDate,
-                  firstDate: DateTime(2000),
-                  lastDate: DateTime(2121),
-                );
-                if (pickedDate != null && pickedDate != selectedDate) {
-                  selectedDate = pickedDate;
-                }
-              },
-              child: const Text(
-                "Select Date",
-                style: TextStyle(color: Colors.white),
-              ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: ElevatedButton(
+                    style: ButtonStyle(
+                      backgroundColor:
+                          MaterialStateProperty.all<Color>(Colors.purple),
+                    ),
+                    onPressed: () async {
+                      DateTime? pickedDate = await showDatePicker(
+                        context: context,
+                        initialDate: selectedDate,
+                        firstDate: DateTime(2000),
+                        lastDate: DateTime(2121),
+                      );
+                      if (pickedDate != null && pickedDate != selectedDate) {
+                        selectedDate = pickedDate;
+                      }
+                    },
+                    child: const Text(
+                      "Select Date",
+                      style: TextStyle(color: Colors.white),
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: ElevatedButton(
+                    style: ButtonStyle(
+                      backgroundColor:
+                          MaterialStateProperty.all<Color>(Colors.purple),
+                    ),
+                    onPressed: () {
+                      int value1 = int.parse(amount.text);
+                      String value2 = note.text;
+                      createAlbum(type, category, value1, value2, selectedDate);
+                      Navigator.of(context).pop();
+                    },
+                    child:
+                        const Text("Ok", style: TextStyle(color: Colors.white)),
+                  ),
+                ),
+              ],
             ),
           ],
         ),
       );
     },
+  );
+}
+
+Future<http.Response> createAlbum(String title, String category, int amount,
+    String note, DateTime dateOfBirth) {
+  String dateAsString = dateOfBirth.toIso8601String().substring(0, 10);
+  print("$title\n$category\n$amount\n$dateAsString\n$note");
+
+  return http.post(
+    Uri.parse('http://127.0.0.1:8000/admin/app/income/'),
+    headers: <String, String>{
+      'Content-Type': 'application/json; charset=UTF-8',
+    },
+    body: jsonEncode(
+      <String, dynamic>{
+        //'title': title,
+        'income_category': category,
+        'income_date': dateAsString,
+        'income_amount': amount,
+        'income_note': note,
+        //'user':
+      },
+    ),
   );
 }

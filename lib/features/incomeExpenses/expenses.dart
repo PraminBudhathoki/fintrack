@@ -1,5 +1,8 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:http/http.dart' as http;
 
 class Expenses extends StatelessWidget {
   const Expenses({super.key});
@@ -22,6 +25,7 @@ class Eicon extends StatefulWidget {
 
 class _EiconState extends State<Eicon> {
   @override
+  int index = 0;
   Widget build(BuildContext context) {
     return GridView.count(
       mainAxisSpacing: 18,
@@ -48,7 +52,8 @@ class _EiconState extends State<Eicon> {
               ],
             ),
             onTap: () {
-              _showBottomSheet(context);
+              index = 1;
+              _showBottomSheet(context, index);
             },
           ),
         ),
@@ -70,7 +75,8 @@ class _EiconState extends State<Eicon> {
               ],
             ),
             onTap: () {
-              _showBottomSheet(context);
+              index = 2;
+              _showBottomSheet(context, index);
             },
           ),
         ),
@@ -92,7 +98,8 @@ class _EiconState extends State<Eicon> {
               ],
             ),
             onTap: () {
-              _showBottomSheet(context);
+              index = 3;
+              _showBottomSheet(context, index);
             },
           ),
         ),
@@ -114,7 +121,8 @@ class _EiconState extends State<Eicon> {
               ],
             ),
             onTap: () {
-              _showBottomSheet(context);
+              index = 4;
+              _showBottomSheet(context, index);
             },
           ),
         ),
@@ -136,7 +144,8 @@ class _EiconState extends State<Eicon> {
               ],
             ),
             onTap: () {
-              _showBottomSheet(context);
+              index = 5;
+              _showBottomSheet(context, index);
             },
           ),
         ),
@@ -158,7 +167,8 @@ class _EiconState extends State<Eicon> {
               ],
             ),
             onTap: () {
-              _showBottomSheet(context);
+              index = 6;
+              _showBottomSheet(context, index);
             },
           ),
         ),
@@ -181,7 +191,8 @@ class _EiconState extends State<Eicon> {
               ],
             ),
             onTap: () {
-              _showBottomSheet(context);
+              index = 7;
+              _showBottomSheet(context, index);
             },
           ),
         ),
@@ -205,7 +216,8 @@ class _EiconState extends State<Eicon> {
               ],
             ),
             onTap: () {
-              _showBottomSheet(context);
+              index = 8;
+              _showBottomSheet(context, index);
             },
           ),
         ),
@@ -229,7 +241,8 @@ class _EiconState extends State<Eicon> {
               ],
             ),
             onTap: () {
-              _showBottomSheet(context);
+              index = 9;
+              _showBottomSheet(context, index);
             },
           ),
         ),
@@ -251,7 +264,8 @@ class _EiconState extends State<Eicon> {
               ],
             ),
             onTap: () {
-              _showBottomSheet(context);
+              index = 10;
+              _showBottomSheet(context, index);
             },
           ),
         ),
@@ -277,7 +291,8 @@ class _EiconState extends State<Eicon> {
               ],
             ),
             onTap: () {
-              _showBottomSheet(context);
+              index = 11;
+              _showBottomSheet(context, index);
             },
           ),
         ),
@@ -300,7 +315,8 @@ class _EiconState extends State<Eicon> {
               ],
             ),
             onTap: () {
-              _showBottomSheet(context);
+              index = 12;
+              _showBottomSheet(context, index);
             },
           ),
         ),
@@ -323,7 +339,8 @@ class _EiconState extends State<Eicon> {
               ],
             ),
             onTap: () {
-              _showBottomSheet(context);
+              index = 13;
+              _showBottomSheet(context, index);
             },
           ),
         ),
@@ -348,7 +365,8 @@ class _EiconState extends State<Eicon> {
               ],
             ),
             onTap: () {
-              _showBottomSheet(context);
+              index = 14;
+              _showBottomSheet(context, index);
             },
           ),
         ),
@@ -370,7 +388,8 @@ class _EiconState extends State<Eicon> {
               ],
             ),
             onTap: () {
-              _showBottomSheet(context);
+              index = 15;
+              _showBottomSheet(context, index);
             },
           ),
         ),
@@ -392,7 +411,8 @@ class _EiconState extends State<Eicon> {
               ],
             ),
             onTap: () {
-              _showBottomSheet(context);
+              index = 16;
+              _showBottomSheet(context, index);
             },
           ),
         ),
@@ -415,7 +435,8 @@ class _EiconState extends State<Eicon> {
               ],
             ),
             onTap: () {
-              _showBottomSheet(context);
+              index = 17;
+              _showBottomSheet(context, index);
             },
           ),
         ),
@@ -437,7 +458,8 @@ class _EiconState extends State<Eicon> {
               ],
             ),
             onTap: () {
-              _showBottomSheet(context);
+              index = 18;
+              _showBottomSheet(context, index);
             },
           ),
         ),
@@ -460,7 +482,8 @@ class _EiconState extends State<Eicon> {
               ],
             ),
             onTap: () {
-              _showBottomSheet(context);
+              index = 19;
+              _showBottomSheet(context, index);
             },
           ),
         ),
@@ -482,7 +505,8 @@ class _EiconState extends State<Eicon> {
               ],
             ),
             onTap: () {
-              _showBottomSheet(context);
+              index = 20;
+              _showBottomSheet(context, index);
             },
           ),
         ),
@@ -504,7 +528,8 @@ class _EiconState extends State<Eicon> {
               ],
             ),
             onTap: () {
-              _showBottomSheet(context);
+              index = 21;
+              _showBottomSheet(context, index);
             },
           ),
         ),
@@ -527,7 +552,8 @@ class _EiconState extends State<Eicon> {
               ],
             ),
             onTap: () {
-              _showBottomSheet(context);
+              index = 22;
+              _showBottomSheet(context, index);
             },
           ),
         ),
@@ -549,7 +575,8 @@ class _EiconState extends State<Eicon> {
               ],
             ),
             onTap: () {
-              _showBottomSheet(context);
+              index = 23;
+              _showBottomSheet(context, index);
             },
           ),
         ),
@@ -572,7 +599,8 @@ class _EiconState extends State<Eicon> {
               ],
             ),
             onTap: () {
-              _showBottomSheet(context);
+              index = 24;
+              _showBottomSheet(context, index);
             },
           ),
         ),
@@ -594,7 +622,8 @@ class _EiconState extends State<Eicon> {
               ],
             ),
             onTap: () {
-              _showBottomSheet(context);
+              index = 25;
+              _showBottomSheet(context, index);
             },
           ),
         ),
@@ -616,7 +645,8 @@ class _EiconState extends State<Eicon> {
               ],
             ),
             onTap: () {
-              _showBottomSheet(context);
+              index = 26;
+              _showBottomSheet(context, index);
             },
           ),
         ),
@@ -638,7 +668,8 @@ class _EiconState extends State<Eicon> {
               ],
             ),
             onTap: () {
-              _showBottomSheet(context);
+              index = 27;
+              _showBottomSheet(context, index);
             },
           ),
         ),
@@ -647,15 +678,71 @@ class _EiconState extends State<Eicon> {
   }
 }
 
-void _showBottomSheet(BuildContext context) {
+void _showBottomSheet(BuildContext context, index) {
   showModalBottomSheet(
     context: context,
     builder: (BuildContext context) {
-      //use this controller to get what the user typed.
-      final dataToPass = TextEditingController();
-      final textController2 = TextEditingController();
+      final amount = TextEditingController();
+      final note = TextEditingController();
       //DateTime selectedDeadline = DateTime.now();
       DateTime selectedDate = DateTime.now();
+      String category = " ";
+      String type = "Expenses";
+      if (index == 1) {
+        category = "Food";
+      } else if (index == 2) {
+        category = "Fuel";
+      } else if (index == 3) {
+        category = "Bills";
+      } else if (index == 4) {
+        category = "Grocery";
+      } else if (index == 5) {
+        category = "Education";
+      } else if (index == 6) {
+        category = "Baby";
+      } else if (index == 7) {
+        category = "Tax";
+      } else if (index == 8) {
+        category = "Transportation";
+      } else if (index == 9) {
+        category = "Home";
+      } else if (index == 10) {
+        category = "Movie";
+      } else if (index == 11) {
+        category = "Clothing";
+      } else if (index == 12) {
+        category = "Insurance";
+      } else if (index == 13) {
+        category = "Travel";
+      } else if (index == 14) {
+        category = "Electronics";
+      } else if (index == 15) {
+        category = "Office";
+      } else if (index == 16) {
+        category = "Fitness";
+      } else if (index == 17) {
+        category = "Sports";
+      } else if (index == 18) {
+        category = "Telephone";
+      } else if (index == 19) {
+        category = "Pet";
+      } else if (index == 20) {
+        category = "Cigaratte";
+      } else if (index == 21) {
+        category = "Furniture";
+      } else if (index == 22) {
+        category = "Beauty";
+      } else if (index == 23) {
+        category = "Books";
+      } else if (index == 24) {
+        category = "Gift";
+      } else if (index == 25) {
+        category = "Beverage";
+      } else if (index == 26) {
+        category = "Health";
+      } else {
+        category = "Others";
+      }
 
       return SingleChildScrollView(
         child: SizedBox(
@@ -667,25 +754,12 @@ void _showBottomSheet(BuildContext context) {
                 padding: const EdgeInsets.all(8.0),
                 child: TextField(
                   //style: TextStyle(color: Colors.green),
-                  controller: dataToPass,
+                  controller: amount,
                   autofocus: true,
                   keyboardType: TextInputType.number,
-                  decoration: InputDecoration(
-                    suffixIcon: IconButton(
-                      onPressed: () {
-                        // print(dataToPass.runtimeType);
-                        // print(dataToPass);
-                        // Navigator.push(
-                        //   context,
-                        //   MaterialPageRoute(
-                        //       builder: (context) =>
-                        //           Abs(dataToPass: dataToPass.text)),
-                        // );
-                      },
-                      icon: const Icon(Icons.add_box_rounded),
-                    ),
-                    hintStyle: const TextStyle(fontSize: 20),
-                    border: const OutlineInputBorder(),
+                  decoration: const InputDecoration(
+                    hintStyle: TextStyle(fontSize: 20),
+                    border: OutlineInputBorder(),
                     hintText: 'Enter amount.',
                   ),
                 ),
@@ -693,39 +767,89 @@ void _showBottomSheet(BuildContext context) {
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: TextField(
-                  controller: textController2,
+                  controller: note,
                   keyboardType: TextInputType.text,
                   decoration: const InputDecoration(
+                    hintStyle: TextStyle(fontSize: 20),
                     border: OutlineInputBorder(),
                     hintText: 'Enter note',
                   ),
                 ),
               ),
-              ElevatedButton(
-                style: ButtonStyle(
-                  backgroundColor:
-                      MaterialStateProperty.all<Color>(Colors.purple),
-                ),
-                onPressed: () async {
-                  DateTime? pickedDate = await showDatePicker(
-                    context: context,
-                    initialDate: selectedDate,
-                    firstDate: DateTime(2000),
-                    lastDate: DateTime(2121),
-                  );
-                  if (pickedDate != null && pickedDate != selectedDate) {
-                    selectedDate = pickedDate;
-                  }
-                },
-                child: const Text(
-                  "Select Date",
-                  style: TextStyle(color: Colors.white),
-                ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: ElevatedButton(
+                      style: ButtonStyle(
+                        backgroundColor:
+                            MaterialStateProperty.all<Color>(Colors.purple),
+                      ),
+                      onPressed: () async {
+                        DateTime? pickedDate = await showDatePicker(
+                          context: context,
+                          initialDate: selectedDate,
+                          firstDate: DateTime(2000),
+                          lastDate: DateTime(2121),
+                        );
+                        if (pickedDate != null && pickedDate != selectedDate) {
+                          selectedDate = pickedDate;
+                        }
+                      },
+                      child: const Text(
+                        "Select Date",
+                        style: TextStyle(color: Colors.white),
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: ElevatedButton(
+                      style: ButtonStyle(
+                        backgroundColor:
+                            MaterialStateProperty.all<Color>(Colors.purple),
+                      ),
+                      onPressed: () {
+                        int value1 = int.parse(amount.text);
+                        String value2 = note.text;
+                        // createAlbum(
+                        //     type, category, value1, value2, selectedDate);
+                        Navigator.of(context).pop();
+                      },
+                      child: const Text("Ok",
+                          style: TextStyle(color: Colors.white)),
+                    ),
+                  ),
+                ],
               ),
             ],
           ),
         ),
       );
     },
+  );
+}
+
+Future<http.Response> createAlbum(String title, String category, int amount,
+    String note, DateTime dateOfBirth) {
+  String dateAsString = dateOfBirth.toIso8601String().substring(0, 10);
+  print("$title\n$category\n$amount\n$dateAsString\n$note");
+
+  return http.post(
+    Uri.parse('http://127.0.0.1:8000/admin/app/income/'),
+    headers: <String, String>{
+      'Content-Type': 'application/json; charset=UTF-8',
+    },
+    body: jsonEncode(
+      <String, dynamic>{
+        //'title': title,
+        'expenses_category': category,
+        'expenses_date': dateAsString,
+        'expenses_amount': amount,
+        'expenses_note': note,
+        //'user':
+      },
+    ),
   );
 }

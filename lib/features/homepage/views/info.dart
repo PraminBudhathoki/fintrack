@@ -16,8 +16,6 @@ class Info extends StatelessWidget {
             style: TextStyle(color: Colors.white)),
         backgroundColor: Colors.purple,
         elevation: 10,
-        
-        
       ),
     );
   }

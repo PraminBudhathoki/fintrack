@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 
 class Asset extends StatelessWidget {
   const Asset({super.key});
@@ -20,6 +22,21 @@ class Aicon extends StatefulWidget {
 }
 
 class _AiconState extends State<Aicon> {
+  final TextEditingController _controller1 = TextEditingController();
+  final TextEditingController _controller2 = TextEditingController();
+  final TextEditingController _controller3 = TextEditingController();
+
+  String type = "Asset";
+
+  List<String> types = [
+    'Cash',
+    'Real State',
+    'Vehicle',
+    'Gadgets',
+    'Investment',
+    'money to pay'
+  ];
+  String selectedType = 'Cash';
   @override
   Widget build(BuildContext context) {
     DateTime selectedDate = DateTime.now();
@@ -39,56 +56,65 @@ class _AiconState extends State<Aicon> {
               padding: EdgeInsets.all(6.0),
               child: Text("Select Category", style: TextStyle(fontSize: 20)),
             ),
-            Padding(
-              padding: const EdgeInsets.all(6.0),
-              child: TextField(
-                readOnly: true,
-                decoration: InputDecoration(
-                  border: const OutlineInputBorder(),
-                  hintText: 'Select Category',
-                  suffixIcon: DropdownButton(
-                    items: const [
-                      DropdownMenuItem<String>(
-                        value: "One",
-                        child: Text("Real State"),
-                      ),
-                      DropdownMenuItem<String>(
-                        value: "Two",
-                        child: Text("Vehicles"),
-                      ),
-                      DropdownMenuItem<String>(
-                        value: "Three",
-                        child: Text("Cash"),
-                      ),
-                      DropdownMenuItem<String>(
-                        value: "Four",
-                        child: Text("Gadgets"),
-                      ),
-                      DropdownMenuItem<String>(
-                        value: "Five",
-                        child: Text("Investment"),
-                      ),
-                      DropdownMenuItem<String>(
-                        value: "Six",
-                        child: Text("Unpaid amount"),
-                      ),
-                      DropdownMenuItem<String>(
-                        value: "Seven",
-                        child: Text("Others"),
-                      ),
-                    ],
-                    onChanged: (String? value) {},
-                  ),
-                ),
+            DropdownButtonFormField<String>(
+              value: selectedType,
+              iconEnabledColor: const Color(0xFFC3C3C3),
+              iconDisabledColor: const Color(0xFFC3C3C3),
+              iconSize: 25,
+              style: const TextStyle(
+                fontWeight: FontWeight.normal,
+                color: Colors.black,
+              ),
+              items: types.map((category) {
+                return DropdownMenuItem<String>(
+                  value: category,
+                  // child: Text("Ok")
+                  child: Text(category),
+                );
+              }).toList(),
+              onChanged: (value) {
+                setState(() {
+                  selectedType = value!;
+                });
+              },
+              // decoration: customTextfieldDecoration(),
+              decoration: const InputDecoration(
+                border: OutlineInputBorder(),
+                hintText: 'Select Category',
               ),
             ),
             TextButton(
-              onPressed: () {},
+              onPressed: () {
+                showDialog(
+                  context: context,
+                  builder: (ctx) => AlertDialog(
+                    title: const Text("Add new asset:"),
+                    content: TextField(
+                      controller: _controller1,
+                    ),
+                    actions: <Widget>[
+                      TextButton(
+                        onPressed: () {
+                          String newCategory = _controller1.text;
+                          if (newCategory.isNotEmpty) {
+                            setState(() {
+                              types.add(newCategory);
+                              selectedType = newCategory;
+                            });
+                          }
+                          Navigator.of(ctx).pop();
+                        },
+                        child: const Text("Ok"),
+                      ),
+                    ],
+                  ),
+                );
+              },
               child: const Row(
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Text(
-                    "Add category",
-                    style: TextStyle(color: Colors.purple),
+                    "Add Category",
                   ),
                 ],
               ),
@@ -97,11 +123,12 @@ class _AiconState extends State<Aicon> {
               padding: EdgeInsets.all(6.0),
               child: Text("Amount", style: TextStyle(fontSize: 20)),
             ),
-            const Padding(
-              padding: EdgeInsets.all(6.0),
+            Padding(
+              padding: const EdgeInsets.all(6.0),
               child: TextField(
-                readOnly: true,
-                decoration: InputDecoration(
+                controller: _controller2,
+                keyboardType: TextInputType.number,
+                decoration: const InputDecoration(
                   border: OutlineInputBorder(),
                   hintText: 'Enter amount',
                 ),
@@ -111,10 +138,11 @@ class _AiconState extends State<Aicon> {
               padding: EdgeInsets.all(6.0),
               child: Text("Note", style: TextStyle(fontSize: 20)),
             ),
-            const Padding(
-              padding: EdgeInsets.all(6.0),
+            Padding(
+              padding: const EdgeInsets.all(6.0),
               child: TextField(
-                decoration: InputDecoration(
+                controller: _controller3,
+                decoration: const InputDecoration(
                   border: OutlineInputBorder(),
                   hintText: 'Enter Notes or Remarks',
                 ),
@@ -144,9 +172,48 @@ class _AiconState extends State<Aicon> {
                 ),
               ),
             ),
+            Padding(
+              padding: const EdgeInsets.all(6.0),
+              child: ElevatedButton(
+                style: const ButtonStyle(
+                    backgroundColor: MaterialStatePropertyAll(Colors.purple)),
+                onPressed: () {
+                  int value1 = int.parse(_controller2.text);
+                  String value2 = _controller3.text;
+                  createAlbum(type, selectedType, value1, value2, selectedDate);
+                },
+                child: const Text(
+                  "Save",
+                  style: TextStyle(color: Colors.white),
+                ),
+              ),
+            ),
           ],
         );
       },
     ));
   }
+}
+
+Future<http.Response> createAlbum(String title, String category, int amount,
+    String note, DateTime dateOfBirth) {
+  String dateAsString = dateOfBirth.toIso8601String().substring(0, 10);
+  print("$title\n$category\n$amount\n$dateAsString\n$note");
+
+  return http.post(
+    Uri.parse('http://127.0.0.1:8000/admin/app/income/'),
+    headers: <String, String>{
+      'Content-Type': 'application/json; charset=UTF-8',
+    },
+    body: jsonEncode(
+      <String, dynamic>{
+        //'title': title,
+        'asset_category': category,
+        'asset_date': dateAsString,
+        'asset_amount': amount,
+        'asset_note': note,
+        //'user':
+      },
+    ),
+  );
 }

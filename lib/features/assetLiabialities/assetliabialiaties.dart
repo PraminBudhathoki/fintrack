@@ -25,14 +25,14 @@ class Two extends StatelessWidget {
                 )),
                 Tab(
                     icon: Text(
-                  "Liabialiaties",
+                  "Liabilities",
                   style: TextStyle(fontSize: 20, color: Colors.white),
                 )),
               ],
             ),
             title: const Center(
                 child: Text(
-              "Add       ",
+              "ADD        ",
               style: TextStyle(fontSize: 25, color: Colors.white),
             )),
             backgroundColor: Colors.purple,

@@ -203,7 +203,7 @@ class Cdrawer extends StatelessWidget {
                   // Navigate to a new screen when the section is tapped
                   Navigator.of(context).push(
                     MaterialPageRoute(
-                      builder: (context) => History(),
+                      builder: (context) => const History(),
                     ),
                   );
                 },
@@ -235,7 +235,7 @@ class Cdrawer extends StatelessWidget {
                   // Navigate to a new screen when the section is tapped
                   Navigator.of(context).push(
                     MaterialPageRoute(
-                      builder: (context) => const Contact(),
+                      builder: (context) => const Info(),
                     ),
                   );
                 },

@@ -110,9 +110,9 @@ class SignupForm extends StatelessWidget {
                         Colors.purple, // Set the background color of the button
                   ),
                   onPressed: () {
-                    NavigationService().navigateToScreen(SuccessScreen());
+                    NavigationService().navigateToScreen(const SuccessScreen());
                   },
-                  child: Text(StringManager.signUp,
+                  child: const Text(StringManager.signUp,
                       style: TextStyle(color: Colors.white)),
                 ),
               ),
