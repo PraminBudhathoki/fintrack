@@ -110,7 +110,7 @@ class _MyAppState extends State<History> {
                       child: PhysicalModel(
                         color: Colors.blueGrey,
                         elevation: 10,
-                        borderRadius: BorderRadius.circular(20),
+                        borderRadius: BorderRadius.circular(15),
                         child: InkWell(
                           onTap: () {
                             showDialog(
