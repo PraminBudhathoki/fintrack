@@ -87,7 +87,6 @@ class _MyAppState extends State<History> {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Fetch Data Example',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
@@ -108,55 +107,75 @@ class _MyAppState extends State<History> {
                     Album album = snapshot.data![index];
                     return Padding(
                       padding: const EdgeInsets.all(8.0),
-                      child: InkWell(
-                        onTap: () {
-                          showDialog(
-                            context: context,
-                            builder: (BuildContext context) {
-                              return AlertDialog(
-                                title: const Text('Income Details'),
-                                content: SingleChildScrollView(
-                                  child: ListBody(
-                                    children: <Widget>[
-                                      const Text("Category: Salary"),
-                                      const Text("Amount: 5000"),
-                                      const Text("Date:2080-10-25"),
-                                      const Text("Note: This is note."),
-                                      //Text('Type: ${album.type}'),
-                                      //Text('Amount: ${album.amount}'),
-                                      //Text('Note: ${album.note}'),
-                                      Text('User ID: ${album.userId}'),
-                                    ],
+                      child: PhysicalModel(
+                        color: Colors.blueGrey,
+                        elevation: 10,
+                        borderRadius: BorderRadius.circular(20),
+                        child: InkWell(
+                          onTap: () {
+                            showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return AlertDialog(
+                                  title: const Text('Income Details'),
+                                  content: SingleChildScrollView(
+                                    child: ListBody(
+                                      children: <Widget>[
+                                        const Text("Category: Salary"),
+                                        const Text("Amount: 5000"),
+                                        const Text("Date:2080-10-25"),
+                                        const Text("Note: This is note."),
+                                        //Text('Type: ${album.type}'),
+                                        //Text('Amount: ${album.amount}'),
+                                        //Text('Note: ${album.note}'),
+                                        Text('User ID: ${album.userId}'),
+                                      ],
+                                    ),
                                   ),
-                                ),
-                                actions: <Widget>[
-                                  TextButton(
-                                    onPressed: () {
-                                      Navigator.of(context).pop();
-                                    },
-                                    child: const Text('Close'),
-                                  ),
-                                ],
-                              );
-                            },
-                          );
-                        },
-                        child: ListTile(
-                          tileColor: Colors.blueGrey,
-                          title: const Row(
-                            children: [
-                              Text("Income:"),
-                              //Text(album.type),
-                            ],
+                                  actions: <Widget>[
+                                    TextButton(
+                                      onPressed: () async {
+                                        await deleteAlbum(album.userId);
+                                        setState(() {
+                                          snapshot.data!.removeAt(index);
+                                        });
+                                        Navigator.of(context).pop();
+                                      },
+                                      child: const Text('Delete'),
+                                    ),
+                                    // TextButton(
+                                    //   onPressed: () {
+                                    //     Navigator.of(context).pop();
+                                    //   },
+                                    //   child: const Text('Delete'),
+                                    // ),
+                                    TextButton(
+                                      onPressed: () {
+                                        Navigator.of(context).pop();
+                                      },
+                                      child: const Text('Close'),
+                                    ),
+                                  ],
+                                );
+                              },
+                            );
+                          },
+                          child: ListTile(
+                            title: const Row(
+                              children: [
+                                Text("Income:"),
+                                //Text(album.type),
+                              ],
+                            ),
+                            subtitle: const Row(
+                              children: [
+                                Text("Food:::"),
+                                //Text(album.note),
+                              ],
+                            ),
+                            trailing: Text('Amount: ${album.amount}',
+                                style: const TextStyle(fontSize: 15)),
                           ),
-                          subtitle: const Row(
-                            children: [
-                              Text("Food:::"),
-                              //Text(album.note),
-                            ],
-                          ),
-                          trailing: Text('Amount: ${album.amount}',
-                              style: const TextStyle(fontSize: 15)),
                         ),
                       ),
                     );
@@ -165,7 +184,6 @@ class _MyAppState extends State<History> {
               } else if (snapshot.hasError) {
                 return Text('${snapshot.error}');
               }
-
               // By default, show a loading spinner.
               return const CircularProgressIndicator();
             },
@@ -173,5 +191,20 @@ class _MyAppState extends State<History> {
         ),
       ),
     );
+  }
+}
+
+Future<void> deleteAlbum(int id) async {
+  final response = await http.delete(
+    Uri.parse('https://jsonplaceholder.typicode.com/posts/$id'),
+    headers: {
+      HttpHeaders.authorizationHeader: 'Basic your_api_token_here',
+    },
+  );
+
+  if (response.statusCode == 200) {
+    print('Deleted');
+  } else {
+    throw Exception('Failed to delete album');
   }
 }

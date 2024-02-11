@@ -1,14 +1,28 @@
 import 'package:fintrack/constants/string_manager.dart';
+import 'package:fintrack/features/authentication/bloc/login/login_bloc.dart';
+import 'package:fintrack/features/authentication/bloc/login/login_events.dart';
+import 'package:fintrack/features/authentication/bloc/login/login_state.dart';
 import 'package:fintrack/features/authentication/views/signup/signup.dart';
+import 'package:fintrack/features/homepage/views/accounts1.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:iconsax/iconsax.dart';
 import '../../../../../services/navigation_service.dart';
 
-class LoginForm extends StatelessWidget {
+class LoginForm extends StatefulWidget {
   const LoginForm({
     super.key,
   });
 
+  @override
+  State<LoginForm> createState() => _LoginFormState();
+}
+
+class _LoginFormState extends State<LoginForm> {
+  bool checkedValue = true;
+  bool _obscureText = true;
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Form(
@@ -18,6 +32,7 @@ class LoginForm extends StatelessWidget {
           children: [
             ///Email
             TextFormField(
+              controller: emailController,
               decoration: const InputDecoration(
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.all(
@@ -27,24 +42,62 @@ class LoginForm extends StatelessWidget {
                 prefix: Icon(Iconsax.direct_right),
                 labelText: StringManager.email,
               ),
+              onChanged: (val) {
+                BlocProvider.of<LoginBloc>(context).add(
+                  LoginTextChangedEvent(
+                      emailController.text, passwordController.text),
+                );
+              },
             ),
             const SizedBox(height: 16),
 
             ///Password
             TextFormField(
-              obscureText: true,
-              decoration: const InputDecoration(
-                border: OutlineInputBorder(
+              controller: passwordController,
+              obscureText: _obscureText,
+              decoration: InputDecoration(
+                border: const OutlineInputBorder(
                   borderRadius: BorderRadius.all(
                     Radius.circular(10.0),
                   ),
                 ),
-                prefix: Icon(Iconsax.password_check),
+                prefix: const Icon(Iconsax.password_check),
                 labelText: StringManager.password,
-                suffixIcon: Icon(Iconsax.eye_slash),
+                suffixIcon: GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      _obscureText = !_obscureText;
+                    });
+                  },
+                  child: Icon(_obscureText ? Iconsax.eye_slash : Iconsax.eye),
+                ),
+              ),
+              onChanged: (val) {
+                BlocProvider.of<LoginBloc>(context).add(
+                  LoginTextChangedEvent(
+                      emailController.text, passwordController.text),
+                );
+              },
+            ),
+
+            ///Error message displayed
+
+            Container(
+              alignment: Alignment.centerLeft,
+              child: BlocBuilder<LoginBloc, LoginState>(
+                builder: (context, state) {
+                  if (state is LoginErrorState) {
+                    return Text(
+                      state.errorMessage,
+                      style: TextStyle(color: Colors.red),
+                      textAlign: TextAlign.left,
+                    );
+                  } else {
+                    return Container();
+                  }
+                },
               ),
             ),
-            const SizedBox(height: 8),
 
             ///Remember Me and Forget Password
             Row(
@@ -54,8 +107,12 @@ class LoginForm extends StatelessWidget {
                 Row(
                   children: [
                     Checkbox(
-                        value: true,
-                        onChanged: (value) {},
+                        value: checkedValue,
+                        onChanged: (newValue) {
+                          setState(() {
+                            checkedValue = newValue!;
+                          });
+                        },
                         activeColor: Colors.purple),
                     const Text(StringManager.rememberMe,
                         style: TextStyle(color: Colors.purple)),
@@ -81,7 +138,9 @@ class LoginForm extends StatelessWidget {
                   backgroundColor:
                       Colors.purple, // Set the background color of the button
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  NavigationService().navigateToScreen(const One());
+                },
                 child: const Text(StringManager.signIn,
                     style: TextStyle(color: Colors.white)),
               ),
