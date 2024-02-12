@@ -1,17 +1,19 @@
+import 'package:fintrack/features/authentication/bloc/login/login_bloc.dart';
 import 'package:flutter/material.dart';
-
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import '../../assetLiabialities/assetliabialiaties.dart';
 import '../../authentication/views/login/login.dart';
 import '../../incomeExpenses/incomeexpenses.dart';
 import '../../target/views/targetPlanner.dart';
 import 'accounts1.dart';
 import 'calculator.dart';
-import 'contactus.dart';
 import 'history.dart';
 import 'info.dart';
 
 class Cdrawer extends StatelessWidget {
-  const Cdrawer({super.key});
+  final storage = FlutterSecureStorage();
+  Cdrawer({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -298,11 +300,16 @@ class Cdrawer extends StatelessWidget {
               borderRadius: const BorderRadius.all(Radius.circular(10)),
               child: InkWell(
                 onTap: () {
+                  storage.delete(key: 'access_token');
                   // Navigate to a new screen when the section is tapped
                   Navigator.of(context).push(
                     MaterialPageRoute(
-                      builder: (context) => const LoginScreen(),
-                    ),
+                        builder: (context) => BlocProvider(
+                              create: (context) => LoginBloc(),
+                              child: const LoginScreen(),
+                            )
+                        //(context) => const LoginScreen(),
+                        ),
                   );
                 },
                 child: const SizedBox(

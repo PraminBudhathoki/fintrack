@@ -10,8 +10,10 @@ import 'package:iconsax/iconsax.dart';
 import '../../../../../services/navigation_service.dart';
 
 class LoginForm extends StatefulWidget {
+  final LoginBloc loginBloc;
   const LoginForm({
     super.key,
+    required this.loginBloc,
   });
 
   @override
@@ -139,7 +141,8 @@ class _LoginFormState extends State<LoginForm> {
                       Colors.purple, // Set the background color of the button
                 ),
                 onPressed: () {
-                  NavigationService().navigateToScreen(const One());
+                  widget.loginBloc.add(LoginSubmittedEvent(
+                      emailController.text, passwordController.text));
                 },
                 child: const Text(StringManager.signIn,
                     style: TextStyle(color: Colors.white)),

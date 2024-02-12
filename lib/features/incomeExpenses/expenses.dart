@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:http/http.dart' as http;
+import 'package:intl/intl.dart';
 
 class Expenses extends StatelessWidget {
   const Expenses({super.key});
@@ -686,7 +687,7 @@ void _showBottomSheet(BuildContext context, index) {
       final note = TextEditingController();
       //DateTime selectedDeadline = DateTime.now();
       DateTime selectedDate = DateTime.now();
-      String category = " ";
+      String category;
       String type = "Expenses";
       if (index == 1) {
         category = "Food";
@@ -831,25 +832,48 @@ void _showBottomSheet(BuildContext context, index) {
   );
 }
 
-Future<http.Response> createAlbum(String title, String category, int amount,
-    String note, DateTime dateOfBirth) {
-  String dateAsString = dateOfBirth.toIso8601String().substring(0, 10);
+// Future<http.Response> createAlbum(String title, String category, int amount,
+//     String note, DateTime dateOfBirth) {
+//   String dateAsString = dateOfBirth.toIso8601String().substring(0, 10);
+//   print("$title\n$category\n$amount\n$dateAsString\n$note");
+
+//   return http.post(
+//     Uri.parse('http://127.0.0.1:8000/admin/app/income/'),
+//     headers: <String, String>{
+//       'Content-Type': 'application/json; charset=UTF-8',
+//     },
+//     body: jsonEncode(
+//       <String, dynamic>{
+//         //'title': title,
+//         'expenses_category': category,
+//         'expenses_date': dateAsString,
+//         'expenses_amount': amount,
+//         'expenses_note': note,
+//         //'user':
+//       },
+//     ),
+//   );
+// }
+
+Future<void> createAlbum(String title, String category, int amount, String note,
+    DateTime dateOfBirth) async {
+  //String dateAsString = dateOfBirth.toIso8601String().substring(0, 10);
+  print(dateOfBirth);
+  String dateAsString = DateFormat('yyyy-MM-dd').format(dateOfBirth);
   print("$title\n$category\n$amount\n$dateAsString\n$note");
 
-  return http.post(
-    Uri.parse('http://127.0.0.1:8000/admin/app/income/'),
-    headers: <String, String>{
-      'Content-Type': 'application/json; charset=UTF-8',
-    },
-    body: jsonEncode(
-      <String, dynamic>{
-        //'title': title,
-        'expenses_category': category,
-        'expenses_date': dateAsString,
-        'expenses_amount': amount,
-        'expenses_note': note,
-        //'user':
+  Map<String, dynamic> requestBody = {
+    'expenses_category': 1,
+    'expenses_date': dateAsString,
+    'expenses_amount': amount,
+    'expenses_note': note,
+  };
+  await http.post(Uri.parse('http://10.10.9.53:8000/incomes/'),
+      headers: {
+        'Content-Type': 'application/json; charset=UTF-8',
+        //'Content-Type': 'application/json',
+        'Authorization':
+            'JWT eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzA4MTAwNzcyLCJpYXQiOjE3MDc2Njg3NzIsImp0aSI6IjMyNDYzOTZmNjQxMzQxNmNhMDZjNTUwZmFkZGU3M2U0IiwidXNlcl9pZCI6MX0.LJ2foNvZJMORUkzl3-K7zhc771hpvaj_9qEhAcn2yt4'
       },
-    ),
-  );
+      body: jsonEncode(requestBody));
 }

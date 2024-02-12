@@ -8,7 +8,7 @@ class Info extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      drawer: const Cdrawer(),
+      drawer:  Cdrawer(),
       body: const User(),
       appBar: AppBar(
         toolbarHeight: 50,

@@ -1,7 +1,9 @@
 import 'dart:convert';
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:http/http.dart' as http;
+import 'package:intl/intl.dart';
 
 class Income extends StatelessWidget {
   const Income({super.key});
@@ -385,7 +387,7 @@ void _showBottomSheet(BuildContext context, int index) {
                       int value1 = int.parse(amount.text);
                       String value2 = note.text;
                       createAlbum(type, category, value1, value2, selectedDate);
-                      Navigator.of(context).pop();
+                      //Navigator.of(context).pop();
                     },
                     child:
                         const Text("Ok", style: TextStyle(color: Colors.white)),
@@ -400,25 +402,25 @@ void _showBottomSheet(BuildContext context, int index) {
   );
 }
 
-Future<http.Response> createAlbum(String title, String category, int amount,
-    String note, DateTime dateOfBirth) {
-  String dateAsString = dateOfBirth.toIso8601String().substring(0, 10);
+Future<void> createAlbum(String title, String category, int amount, String note,
+    DateTime dateOfBirth) async {
+  //String dateAsString = dateOfBirth.toIso8601String().substring(0, 10);
+  print(dateOfBirth);
+  String dateAsString = DateFormat('yyyy-MM-dd').format(dateOfBirth);
   print("$title\n$category\n$amount\n$dateAsString\n$note");
 
-  return http.post(
-    Uri.parse('http://127.0.0.1:8000/admin/app/income/'),
-    headers: <String, String>{
-      'Content-Type': 'application/json; charset=UTF-8',
-    },
-    body: jsonEncode(
-      <String, dynamic>{
-        //'title': title,
-        'income_category': category,
-        'income_date': dateAsString,
-        'income_amount': amount,
-        'income_note': note,
-        //'user':
+  Map<String, dynamic> requestBody = {
+    'income_category': 1,
+    'income_date': dateAsString,
+    'income_amount': amount.toDouble(),
+    'income_note': note,
+  };
+  await http.post(Uri.parse('http://10.10.9.53:8000/incomes/'),
+      headers: {
+        'Content-Type': 'application/json; charset=UTF-8',
+        //'Content-Type': 'application/json',
+        'Authorization':
+            'JWT eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzA4MTAwNzcyLCJpYXQiOjE3MDc2Njg3NzIsImp0aSI6IjMyNDYzOTZmNjQxMzQxNmNhMDZjNTUwZmFkZGU3M2U0IiwidXNlcl9pZCI6MX0.LJ2foNvZJMORUkzl3-K7zhc771hpvaj_9qEhAcn2yt4'
       },
-    ),
-  );
+      body: jsonEncode(requestBody));
 }
