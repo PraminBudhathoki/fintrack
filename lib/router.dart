@@ -7,13 +7,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 //import 'package:flutter_bloc/flutter_bloc.dart';
 import 'constants/routing_manager.dart';
+import 'features/authentication/bloc/login/login_state.dart';
 
 Route<dynamic> generateRoutes(RouteSettings settings) {
   switch (settings.name) {
     case Routes.loginScreen:
       return MaterialPageRoute(
         builder: (context) => BlocProvider(
-          create: (context) => LoginBloc(),
+          //create: (context) => LoginBloc(),
+          create: (context) => LoginBloc( ),
           child: LoginScreen(),
         ),
       );

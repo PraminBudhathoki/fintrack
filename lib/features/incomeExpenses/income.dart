@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
@@ -292,29 +293,29 @@ void _showBottomSheet(BuildContext context, int index) {
       final note = TextEditingController();
       //DateTime selectedDeadline = DateTime.now();
       DateTime selectedDate = DateTime.now();
-      String category = " ";
+      //String category = " ";
       String type = "Income";
-      if (index == 1) {
-        category = "Salary";
-      } else if (index == 2) {
-        category = "Refunds";
-      } else if (index == 3) {
-        category = "Grants";
-      } else if (index == 4) {
-        category = "Investment";
-      } else if (index == 5) {
-        category = "Rental";
-      } else if (index == 6) {
-        category = "Lottery";
-      } else if (index == 7) {
-        category = "Awards";
-      } else if (index == 8) {
-        category = "Dividends";
-      } else if (index == 9) {
-        category = "Sale";
-      } else {
-        category = "Others";
-      }
+      // if (index == 1) {
+      //   category = "Salary";
+      // } else if (index == 2) {
+      //   category = "Refunds";
+      // } else if (index == 3) {
+      //   category = "Grants";
+      // } else if (index == 4) {
+      //   category = "Investment";
+      // } else if (index == 5) {
+      //   category = "Rental";
+      // } else if (index == 6) {
+      //   category = "Lottery";
+      // } else if (index == 7) {
+      //   category = "Awards";
+      // } else if (index == 8) {
+      //   category = "Dividends";
+      // } else if (index == 9) {
+      //   category = "Sale";
+      // } else {
+      //   category = "Others";
+      // }
 
       return SingleChildScrollView(
         child: Column(
@@ -386,7 +387,7 @@ void _showBottomSheet(BuildContext context, int index) {
                     onPressed: () {
                       int value1 = int.parse(amount.text);
                       String value2 = note.text;
-                      createAlbum(type, category, value1, value2, selectedDate);
+                      createAlbum(type, index, value1, value2, selectedDate);
                       //Navigator.of(context).pop();
                     },
                     child:
@@ -402,25 +403,28 @@ void _showBottomSheet(BuildContext context, int index) {
   );
 }
 
-Future<void> createAlbum(String title, String category, int amount, String note,
+Future<void> createAlbum(String title, int index, int amount, String note,
     DateTime dateOfBirth) async {
+  final storage = FlutterSecureStorage();
   //String dateAsString = dateOfBirth.toIso8601String().substring(0, 10);
   print(dateOfBirth);
   String dateAsString = DateFormat('yyyy-MM-dd').format(dateOfBirth);
-  print("$title\n$category\n$amount\n$dateAsString\n$note");
+  print("$title\n$index\n$amount\n$dateAsString\n$note");
 
   Map<String, dynamic> requestBody = {
-    'income_category': 1,
-    'income_date': dateAsString,
-    'income_amount': amount.toDouble(),
     'income_note': note,
+    'income_amount': amount.toDouble(),
+    'income_date': dateAsString,
+    'income_category': index,
   };
-  await http.post(Uri.parse('http://10.10.9.53:8000/incomes/'),
+  final accessToken = await storage.read(key: 'access_token');
+  print('JWT $accessToken');
+  await http.post(Uri.parse('http://192.168.1.167:8000/incomes/'),
+      //http://127.0.0.1:8000/incomes/
       headers: {
         'Content-Type': 'application/json; charset=UTF-8',
         //'Content-Type': 'application/json',
-        'Authorization':
-            'JWT eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzA4MTAwNzcyLCJpYXQiOjE3MDc2Njg3NzIsImp0aSI6IjMyNDYzOTZmNjQxMzQxNmNhMDZjNTUwZmFkZGU3M2U0IiwidXNlcl9pZCI6MX0.LJ2foNvZJMORUkzl3-K7zhc771hpvaj_9qEhAcn2yt4'
+        'Authorization': 'JWT $accessToken'
       },
       body: jsonEncode(requestBody));
 }

@@ -139,7 +139,7 @@ class _MyAppState extends State<History> {
                                         setState(() {
                                           snapshot.data!.removeAt(index);
                                         });
-                                        Navigator.of(context).pop();
+                                        //Navigator.of(context).pop();
                                       },
                                       child: const Text('Delete'),
                                     ),

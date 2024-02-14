@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:intl/intl.dart';
 
 class Asset extends StatelessWidget {
   const Asset({super.key});
@@ -180,7 +182,7 @@ class _AiconState extends State<Aicon> {
                 onPressed: () {
                   int value1 = int.parse(_controller2.text);
                   String value2 = _controller3.text;
-                  createAlbum(type, selectedType, value1, value2, selectedDate);
+                  createAlbum(type, selectedType , value1, value2, selectedDate);
                 },
                 child: const Text(
                   "Save",
@@ -195,25 +197,29 @@ class _AiconState extends State<Aicon> {
   }
 }
 
-Future<http.Response> createAlbum(String title, String category, int amount,
-    String note, DateTime dateOfBirth) {
-  String dateAsString = dateOfBirth.toIso8601String().substring(0, 10);
-  print("$title\n$category\n$amount\n$dateAsString\n$note");
+Future<void> createAlbum(String title, String index, int amount, String note,
+    DateTime dateOfBirth) async {
+  final storage = FlutterSecureStorage();
+  //String dateAsString = dateOfBirth.toIso8601String().substring(0, 10);
+  print(dateOfBirth);
+  String dateAsString = DateFormat('yyyy-MM-dd').format(dateOfBirth);
+  print("$title\n$index\n$amount\n$dateAsString\n$note");
 
-  return http.post(
-    Uri.parse('http://127.0.0.1:8000/admin/app/income/'),
-    headers: <String, String>{
-      'Content-Type': 'application/json; charset=UTF-8',
-    },
-    body: jsonEncode(
-      <String, dynamic>{
-        //'title': title,
-        'asset_category': category,
-        'asset_date': dateAsString,
-        'asset_amount': amount,
-        'asset_note': note,
-        //'user':
+  Map<String, dynamic> requestBody = {
+    'asset_note': note,
+    'asset_amount': amount.toDouble(),
+    'asset_date': dateAsString,
+    'asset_category': index,
+  };
+  final accessToken = await storage.read(key: 'access_token');
+  print('JWT $accessToken');
+  await http.post(Uri.parse('http://192.168.1.167:8000/incomes/'),
+      //http://127.0.0.1:8000/incomes/
+      headers: {
+        'Content-Type': 'application/json; charset=UTF-8',
+        //'Content-Type': 'application/json',
+        'Authorization': 'JWT $accessToken'
       },
-    ),
-  );
+      body: jsonEncode(requestBody));
 }
+

@@ -141,6 +141,7 @@ class _LoginFormState extends State<LoginForm> {
                       Colors.purple, // Set the background color of the button
                 ),
                 onPressed: () {
+                  print('button clicked login submitted');
                   widget.loginBloc.add(LoginSubmittedEvent(
                       emailController.text, passwordController.text));
                 },

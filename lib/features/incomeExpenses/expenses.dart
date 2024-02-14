@@ -687,63 +687,63 @@ void _showBottomSheet(BuildContext context, index) {
       final note = TextEditingController();
       //DateTime selectedDeadline = DateTime.now();
       DateTime selectedDate = DateTime.now();
-      String category;
-      String type = "Expenses";
-      if (index == 1) {
-        category = "Food";
-      } else if (index == 2) {
-        category = "Fuel";
-      } else if (index == 3) {
-        category = "Bills";
-      } else if (index == 4) {
-        category = "Grocery";
-      } else if (index == 5) {
-        category = "Education";
-      } else if (index == 6) {
-        category = "Baby";
-      } else if (index == 7) {
-        category = "Tax";
-      } else if (index == 8) {
-        category = "Transportation";
-      } else if (index == 9) {
-        category = "Home";
-      } else if (index == 10) {
-        category = "Movie";
-      } else if (index == 11) {
-        category = "Clothing";
-      } else if (index == 12) {
-        category = "Insurance";
-      } else if (index == 13) {
-        category = "Travel";
-      } else if (index == 14) {
-        category = "Electronics";
-      } else if (index == 15) {
-        category = "Office";
-      } else if (index == 16) {
-        category = "Fitness";
-      } else if (index == 17) {
-        category = "Sports";
-      } else if (index == 18) {
-        category = "Telephone";
-      } else if (index == 19) {
-        category = "Pet";
-      } else if (index == 20) {
-        category = "Cigaratte";
-      } else if (index == 21) {
-        category = "Furniture";
-      } else if (index == 22) {
-        category = "Beauty";
-      } else if (index == 23) {
-        category = "Books";
-      } else if (index == 24) {
-        category = "Gift";
-      } else if (index == 25) {
-        category = "Beverage";
-      } else if (index == 26) {
-        category = "Health";
-      } else {
-        category = "Others";
-      }
+      //String category;
+      //String type = "Expenses";
+      // if (index == 1) {
+      //   category = "Food";
+      // } else if (index == 2) {
+      //   category = "Fuel";
+      // } else if (index == 3) {
+      //   category = "Bills";
+      // } else if (index == 4) {
+      //   category = "Grocery";
+      // } else if (index == 5) {
+      //   category = "Education";
+      // } else if (index == 6) {
+      //   category = "Baby";
+      // } else if (index == 7) {
+      //   category = "Tax";
+      // } else if (index == 8) {
+      //   category = "Transportation";
+      // } else if (index == 9) {
+      //   category = "Home";
+      // } else if (index == 10) {
+      //   category = "Movie";
+      // } else if (index == 11) {
+      //   category = "Clothing";
+      // } else if (index == 12) {
+      //   category = "Insurance";
+      // } else if (index == 13) {
+      //   category = "Travel";
+      // } else if (index == 14) {
+      //   category = "Electronics";
+      // } else if (index == 15) {
+      //   category = "Office";
+      // } else if (index == 16) {
+      //   category = "Fitness";
+      // } else if (index == 17) {
+      //   category = "Sports";
+      // } else if (index == 18) {
+      //   category = "Telephone";
+      // } else if (index == 19) {
+      //   category = "Pet";
+      // } else if (index == 20) {
+      //   category = "Cigaratte";
+      // } else if (index == 21) {
+      //   category = "Furniture";
+      // } else if (index == 22) {
+      //   category = "Beauty";
+      // } else if (index == 23) {
+      //   category = "Books";
+      // } else if (index == 24) {
+      //   category = "Gift";
+      // } else if (index == 25) {
+      //   category = "Beverage";
+      // } else if (index == 26) {
+      //   category = "Health";
+      // } else {
+      //   category = "Others";
+      // }
 
       return SingleChildScrollView(
         child: SizedBox(
@@ -855,15 +855,15 @@ void _showBottomSheet(BuildContext context, index) {
 //   );
 // }
 
-Future<void> createAlbum(String title, String category, int amount, String note,
+Future<void> createAlbum(String title, int index, int amount, String note,
     DateTime dateOfBirth) async {
   //String dateAsString = dateOfBirth.toIso8601String().substring(0, 10);
   print(dateOfBirth);
   String dateAsString = DateFormat('yyyy-MM-dd').format(dateOfBirth);
-  print("$title\n$category\n$amount\n$dateAsString\n$note");
+  print("$title\n$index\n$amount\n$dateAsString\n$note");
 
   Map<String, dynamic> requestBody = {
-    'expenses_category': 1,
+    'expenses_category': index,
     'expenses_date': dateAsString,
     'expenses_amount': amount,
     'expenses_note': note,
