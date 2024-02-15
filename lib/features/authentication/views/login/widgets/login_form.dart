@@ -23,7 +23,7 @@ class LoginForm extends StatefulWidget {
 class _LoginFormState extends State<LoginForm> {
   bool checkedValue = true;
   bool _obscureText = true;
-  TextEditingController emailController = TextEditingController();
+  TextEditingController usernameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   @override
   Widget build(BuildContext context) {
@@ -34,7 +34,7 @@ class _LoginFormState extends State<LoginForm> {
           children: [
             ///Email
             TextFormField(
-              controller: emailController,
+              controller: usernameController,
               decoration: const InputDecoration(
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.all(
@@ -42,12 +42,12 @@ class _LoginFormState extends State<LoginForm> {
                   ),
                 ),
                 prefix: Icon(Iconsax.direct_right),
-                labelText: StringManager.email,
+                labelText: StringManager.userName,
               ),
               onChanged: (val) {
                 BlocProvider.of<LoginBloc>(context).add(
                   LoginTextChangedEvent(
-                      emailController.text, passwordController.text),
+                      usernameController.text, passwordController.text),
                 );
               },
             ),
@@ -77,7 +77,7 @@ class _LoginFormState extends State<LoginForm> {
               onChanged: (val) {
                 BlocProvider.of<LoginBloc>(context).add(
                   LoginTextChangedEvent(
-                      emailController.text, passwordController.text),
+                      usernameController.text, passwordController.text),
                 );
               },
             ),
@@ -143,7 +143,7 @@ class _LoginFormState extends State<LoginForm> {
                 onPressed: () {
                   print('button clicked login submitted');
                   widget.loginBloc.add(LoginSubmittedEvent(
-                      emailController.text, passwordController.text));
+                      usernameController.text, passwordController.text));
                 },
                 child: const Text(StringManager.signIn,
                     style: TextStyle(color: Colors.white)),

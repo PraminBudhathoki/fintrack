@@ -28,6 +28,7 @@ class _SignupFormState extends State<SignupForm> {
   TextEditingController _phoneController = TextEditingController();
   TextEditingController _usernameController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
+  bool _obscureText = true;
 
   @override
   Widget build(BuildContext context) {
@@ -115,8 +116,9 @@ class _SignupFormState extends State<SignupForm> {
               ///Password
               TextFormField(
                 controller: _passwordController,
-                obscureText: true,
-                decoration: const InputDecoration(
+                //obscureText: true,
+                obscureText: _obscureText,
+                decoration: InputDecoration(
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.all(
                       Radius.circular(10.0),
@@ -124,46 +126,70 @@ class _SignupFormState extends State<SignupForm> {
                   ),
                   prefix: Icon(Iconsax.password_check),
                   labelText: StringManager.password,
-                  suffixIcon: Icon(Iconsax.eye_slash),
+                  suffixIcon: GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        _obscureText = !_obscureText;
+                      });
+                    },
+                    child: Icon(_obscureText ? Iconsax.eye_slash : Iconsax.eye),
+                  ),
+                  //suffixIcon: Icon(Iconsax.eye_slash),
                 ),
               ),
               SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor:
-                        Colors.purple, // Set the background color of the button
-                  ),
-                  onPressed: () async {
-                    final response = await http.post(
-                        Uri.parse('http://192.168.249.80:8000/auth/users/'),
-                        //http://192.168.1.167:8000/auth/users/
-                        headers: {
-                          'Content-Type': 'application/json; charset=UTF-8',
-                          //'Content-Type': 'application/json',
-                        },
-                        body: jsonEncode({
-                          'username': _usernameController.text,
-                          'first_name': _firstNameController.text,
-                          'last_name': _lastNameController.text,
-                          'phone_no': _phoneController.text,
-                          'password': _passwordController.text
-                        }));
-                    print(response.body);
+                    child: const Text(StringManager.signUp,
+                        style: TextStyle(color: Colors.white)),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors
+                          .purple, // Set the background color of the button
+                    ),
+                    onPressed: () async {
+                      // Check if the password length is less than 8 characters
+                      if (_passwordController.text.length > 8) {
+                        // If password length is less than 8, show an error message
+                        {
+                          final response = await http.post(
+                              Uri.parse('http://192.168.1.71:8000/auth/users/'),
+                              //http://192.168.1.167:8000/auth/users/
+                              headers: {
+                                'Content-Type':
+                                    'application/json; charset=UTF-8',
+                                //'Content-Type': 'application/json',
+                              },
+                              body: jsonEncode({
+                                'username': _usernameController.text,
+                                'first_name': _firstNameController.text,
+                                'last_name': _lastNameController.text,
+                                'phone_no': _phoneController.text,
+                                'password': _passwordController.text
+                              }));
+                          print(response.body);
 
-                    //api call
-                    NavigationService().navigateToScreen(const SuccessScreen());
-                    // MaterialPageRoute(
-                    //     builder: (context) => BlocProvider(
-                    //           create: (context) => LoginBloc(),
-                    //           child: const LoginScreen(),
-                    //         )
-                    //     //(context) => const LoginScreen(),
-                    //     );
-                  },
-                  child: const Text(StringManager.signUp,
-                      style: TextStyle(color: Colors.white)),
-                ),
+                          //api call
+                          NavigationService()
+                              .navigateToScreen(const SuccessScreen());
+                          // MaterialPageRoute(
+                          //     builder: (context) => BlocProvider(
+                          //           create: (context) => LoginBloc(),
+                          //           child: const LoginScreen(),
+                          //         )
+                          //     //(context) => const LoginScreen(),
+                          //     );
+                        }
+                        ;
+                      } else {
+                        // If password length is 8 or more, navigate to SuccessScreen
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text(
+                                'Password must be at least 8 characters long.'),
+                          ),
+                        );
+                      }
+                    }),
               ),
             ],
           ),
