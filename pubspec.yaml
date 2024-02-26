@@ -11,9 +11,6 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  intl: ^0.19.0
-
-
   #Icons
   cupertino_icons: ^1.0.2
   flutter_local_notifications: ^16.3.2
@@ -25,7 +22,9 @@ dependencies:
   font_awesome_flutter: ^10.6.0
   http: ^1.2.0
   provider: ^6.1.1
-
+  flutter_colorpicker: ^1.0.3
+  intl: ^0.19.0
+  uuid: ^4.2.2
   flutter_bloc: ^8.1.3
   email_validator: ^2.1.17
   flutter_secure_storage: ^9.0.0
@@ -48,4 +47,5 @@ flutter:
     - assets/logos/F.png
     - assets/logos/facebook-icon.png
     - assets/logos/google-icon.png
+    - assets/no_goals.jpg
 

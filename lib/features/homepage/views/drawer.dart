@@ -5,7 +5,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import '../../assetLiabialities/assetliabialiaties.dart';
 import '../../authentication/views/login/login.dart';
 import '../../incomeExpenses/incomeexpenses.dart';
-import '../../target/views/targetPlanner.dart';
+import '../../target/views/targetScreen.dart';
 import 'accounts1.dart';
 import 'calculator.dart';
 import 'history.dart';
@@ -174,7 +174,7 @@ class Cdrawer extends StatelessWidget {
                   // Navigate to a new screen when the section is tapped
                   Navigator.of(context).push(
                     MaterialPageRoute(
-                      builder: (context) => const TargetPlanner(),
+                      builder: (context) => const TargetScreen(),
                     ),
                   );
                 },
