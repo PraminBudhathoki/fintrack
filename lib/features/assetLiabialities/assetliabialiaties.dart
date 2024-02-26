@@ -20,7 +20,7 @@ class Two extends StatelessWidget {
               tabs: [
                 Tab(
                     icon: Text(
-                  "Asset",
+                  "Assets",
                   style: TextStyle(fontSize: 20, color: Colors.white),
                 )),
                 Tab(

@@ -416,10 +416,11 @@ Future<void> createAlbum(String title, int index, int amount, String note,
     'income_amount': amount.toDouble(),
     'income_date': dateAsString,
     'income_category': index,
+    //'income_title' : 1,
   };
   final accessToken = await storage.read(key: 'access_token');
   print('JWT $accessToken');
-  await http.post(Uri.parse('http://192.168.1.167:8000/incomes/'),
+  await http.post(Uri.parse('http://192.168.1.71:8000/incomes/'),
       //http://127.0.0.1:8000/incomes/
       headers: {
         'Content-Type': 'application/json; charset=UTF-8',
