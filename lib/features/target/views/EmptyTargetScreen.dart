@@ -12,6 +12,127 @@ class EmptyTargetScreen extends StatefulWidget {
 class _EmptyTargetScreenState extends State<EmptyTargetScreen> {
   double targetWallet = 0.0;
 
+  // Function to show the add/update/delete options dialog
+  Future<void> _showOptionsDialog() async {
+    return showDialog<void>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Add/Delete/Update'),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.pop(context); // Close the options dialog
+                  _showAddDialog(); // Show the add dialog
+                },
+                child: Text('Add'),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.pop(context); // Close the options dialog
+                  _showUpdateDialog(); // Show the update dialog
+                },
+                child: Text('Update'),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.pop(context); // Close the options dialog
+                  _removeAmount(); // Remove the amount
+                },
+                child: Text('Delete'),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  // Function to show the add dialog
+  Future<void> _showAddDialog() async {
+    double newAmount = 0.0;
+
+    return showDialog<void>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Add Amount'),
+          content: TextField(
+            onChanged: (value) {
+              newAmount = double.tryParse(value) ?? 0.0;
+            },
+            keyboardType: TextInputType.number,
+            decoration: InputDecoration(labelText: 'Enter Amount'),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context); // Close the add dialog
+              },
+              child: Text('Cancel'),
+            ),
+            TextButton(
+              onPressed: () {
+                setState(() {
+                  targetWallet = newAmount;
+                });
+                Navigator.pop(context); // Close the add dialog
+              },
+              child: Text('Add'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  // Function to show the update dialog
+  Future<void> _showUpdateDialog() async {
+    double newAmount = targetWallet;
+
+    return showDialog<void>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Update Amount'),
+          content: TextField(
+            onChanged: (value) {
+              newAmount = double.tryParse(value) ?? targetWallet;
+            },
+            keyboardType: TextInputType.number,
+            decoration: InputDecoration(labelText: 'Enter New Amount'),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context); // Close the update dialog
+              },
+              child: Text('Cancel'),
+            ),
+            TextButton(
+              onPressed: () {
+                setState(() {
+                  targetWallet = newAmount;
+                });
+                Navigator.pop(context); // Close the update dialog
+              },
+              child: Text('Update'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  // Function to remove the amount
+  void _removeAmount() {
+    setState(() {
+      targetWallet = 0.0;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     // TODO: Replace and add layout widgets
@@ -33,6 +154,8 @@ class _EmptyTargetScreenState extends State<EmptyTargetScreen> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
+
+              
               MaterialButton(
                 textColor: Colors.white,
                 shape: RoundedRectangleBorder(
@@ -41,10 +164,11 @@ class _EmptyTargetScreenState extends State<EmptyTargetScreen> {
                 color: Colors.green,
                 onPressed: () {
                   // TODO: Open a field to add target amount
-
+                  // Show options dialog on button click
+                  _showOptionsDialog();
 
                 },
-                child: const Text('Add Target Amount to the wallet'),
+                child: const Text('Add or update or delete amount to the wallet'),
               ),
               // TODO: Add empty image
               Flexible(

@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 
+import '../models/target.dart';
+
 class TargetItemScreen extends StatefulWidget {
   const TargetItemScreen({Key? key}) : super(key: key);
 
@@ -16,6 +18,25 @@ class _TargetItemScreenState extends State<TargetItemScreen> {
   DateTime? selectedDeadline;
   String selectedImportance = '';
   final index = -1;
+  List<TargetDetails> targetDetailsList = [];
+
+
+  void _handleCheckButtonPress() {
+    // Create a TargetDetails object with the entered details
+    TargetDetails targetDetails = TargetDetails(
+      name: targetNameController.text,
+      amount: double.tryParse(targetAmountController.text) ?? 0.0,
+      importance: selectedImportance,
+      startDate: selectedStartDate,
+      deadline: selectedDeadline,
+    );
+
+    // Add the details to the list
+    targetDetailsList.add(targetDetails);
+
+    // Navigate back to the EmptyTargetScreen with the updated details list
+    Navigator.pop(context, targetDetailsList);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -24,10 +45,7 @@ class _TargetItemScreenState extends State<TargetItemScreen> {
         actions: [
           IconButton(
             icon: const Icon(Icons.check),
-            onPressed: () {
-              // Handle check button press
-              Navigator.pop(context);
-            },
+            onPressed: _handleCheckButtonPress,
           )
         ],
         elevation: 0.0,
