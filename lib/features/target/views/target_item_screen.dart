@@ -7,6 +7,8 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 
+import '../models/target.dart';
+
 class TargetItemScreen extends StatefulWidget {
   final double amount;
 
@@ -25,6 +27,7 @@ class _TargetItemScreenState extends State<TargetItemScreen> {
   String selectedImportance = '';
   String priority = 'low';
   final index = -1;
+<<<<<<< HEAD
   int targetamount = 0;
 
   @override
@@ -77,6 +80,42 @@ class _TargetItemScreenState extends State<TargetItemScreen> {
             _buildDateTimeRow('Start Date', selectedStartDate),
             _buildDateTimeRow('Deadline', selectedDeadline),
           ],
+=======
+  List<TargetDetails> targetDetailsList = [];
+
+
+  void _handleCheckButtonPress() {
+    // Create a TargetDetails object with the entered details
+    TargetDetails targetDetails = TargetDetails(
+      name: targetNameController.text,
+      amount: double.tryParse(targetAmountController.text) ?? 0.0,
+      importance: selectedImportance,
+      startDate: selectedStartDate,
+      deadline: selectedDeadline,
+    );
+
+    // Add the details to the list
+    targetDetailsList.add(targetDetails);
+
+    // Navigate back to the EmptyTargetScreen with the updated details list
+    Navigator.pop(context, targetDetailsList);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.check),
+            onPressed: _handleCheckButtonPress,
+          )
+        ],
+        elevation: 0.0,
+        title: Text(
+          'Target item',
+          style: GoogleFonts.lato(fontWeight: FontWeight.w600),
+>>>>>>> 9e7c4a3f195476875119300b52c18235ef4e9ee8
         ),
       ),
     );

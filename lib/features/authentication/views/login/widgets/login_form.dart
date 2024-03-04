@@ -141,9 +141,11 @@ class _LoginFormState extends State<LoginForm> {
                       Colors.purple, // Set the background color of the button
                 ),
                 onPressed: () {
-                  print('button clicked login submitted');
-                  widget.loginBloc.add(LoginSubmittedEvent(
-                      usernameController.text, passwordController.text));
+
+                  NavigationService().navigateToScreen(const One());
+                  // print('button clicked login submitted');
+                  // widget.loginBloc.add(LoginSubmittedEvent(
+                  //     usernameController.text, passwordController.text));
                 },
                 child: const Text(StringManager.signIn,
                     style: TextStyle(color: Colors.white)),

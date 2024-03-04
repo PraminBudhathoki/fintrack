@@ -10,7 +10,7 @@ class TargetList extends StatefulWidget {
 }
 
 class _TargetListState extends State<TargetList> {
-  List<Target> targets = [];
+  List<TargetDetails> targets = [];
 
   @override
   Widget build(BuildContext context) {
