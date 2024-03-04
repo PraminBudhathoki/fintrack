@@ -15,14 +15,14 @@ Route<dynamic> generateRoutes(RouteSettings settings) {
       return MaterialPageRoute(
         builder: (context) => BlocProvider(
           //create: (context) => LoginBloc(),
-          create: (context) => LoginBloc( ),
+          create: (context) => LoginBloc(),
           child: LoginScreen(),
         ),
       );
     case Routes.signupScreen:
       return MaterialPageRoute(builder: (context) => const SignupScreen());
-    case Routes.successScreen:
-      return MaterialPageRoute(builder: (context) => const SuccessScreen());
+    // case Routes.successScreen:
+    //   return MaterialPageRoute(builder: (context) => const SuccessScreen());
     case Routes.Homepage:
       return MaterialPageRoute(builder: (context) => const One());
     default:

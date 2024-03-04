@@ -36,6 +36,8 @@ class Album {
   final double balance_amount;
   final double total_assets;
   final double total_liabilities;
+  final double target_wallet;
+  final double target_wallet_balance;
 
   const Album({
     required this.total_income,
@@ -43,15 +45,20 @@ class Album {
     required this.balance_amount,
     required this.total_assets,
     required this.total_liabilities,
+    required this.target_wallet,
+    required this.target_wallet_balance,
   });
 
   factory Album.fromJson(Map<String, dynamic> json) {
     return Album(
-        total_income: json['total_income'].toDouble(),
-        total_expenses: json['total_expense'].toDouble(),
-        balance_amount: json['balance_amount'].toDouble(),
-        total_assets: json['total_assets'].toDouble(),
-        total_liabilities: json['total_liabilities'].toDouble());
+      total_income: json['total_income'].toDouble(),
+      total_expenses: json['total_expense'].toDouble(),
+      balance_amount: json['balance_amount'].toDouble(),
+      total_assets: json['total_assets'].toDouble(),
+      total_liabilities: json['total_liabilities'].toDouble(),
+      target_wallet: json['target_wallet_balance'].toDouble(),
+      target_wallet_balance: json['net_balance_amount'].toDouble(),
+    );
   }
 }
 
@@ -251,7 +258,7 @@ class _OneState extends State<One> {
                                             color: Colors.white, fontSize: 20),
                                       ),
                                       Text(
-                                        "Rs${snapshot.data!.balance_amount}",
+                                        "Rs${snapshot.data!.target_wallet_balance}",
                                         style: const TextStyle(
                                             color: Colors.white, fontSize: 20),
                                       ),

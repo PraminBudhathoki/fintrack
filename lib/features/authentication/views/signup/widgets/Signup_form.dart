@@ -169,7 +169,10 @@ class _SignupFormState extends State<SignupForm> {
                           print(response.body);
 
                           //api call
-                          NavigationService()
+                          String username = _usernameController.text;
+                          String password = _passwordController.text;
+                          loginUser(username, password);
+                          await NavigationService()
                               .navigateToScreen(const SuccessScreen());
                           // MaterialPageRoute(
                           //     builder: (context) => BlocProvider(
@@ -196,5 +199,47 @@ class _SignupFormState extends State<SignupForm> {
         ],
       ),
     );
+  }
+}
+
+Future<void> loginUser(String username, String password) async {
+  try {
+    final storage = FlutterSecureStorage();
+    Map<String, dynamic> requestBody = {
+      'username': username,
+      'password': password,
+    };
+    print('before response lkjaskldfjsadf');
+    final response = await http.post(
+      Uri.parse('http://192.168.1.71:8000/auth/jwt/create'),
+      headers: {
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(requestBody),
+    );
+    print('after response Here');
+    print('body');
+    print(response.body);
+    final result = jsonDecode(response.body);
+
+    print(result['access']);
+    print(response.statusCode);
+    print("login API called");
+    if (response.statusCode == 200) {
+      await storage.write(key: 'access_token', value: result['access']);
+
+      // print('here');
+      // print(await storage.read(key: 'access_token'));
+
+      //await storage.delete(key: 'access_token');
+      print('Navigating to home screen from bloc');
+      //emit(LoginSucessfulNavigateToHomeActionState());
+    } else {
+      print("Error");
+      //emit(LoginErrorState("Incorrect email or password."));
+    }
+  } catch (e) {
+    print("Error: $e");
+    // emit(LoginErrorState("An error occurred while logging in."));
   }
 }

@@ -1,19 +1,16 @@
 import 'dart:io';
-import 'package:fintrack/features/assetLiabialities/assetliabialiaties.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'dart:convert';
 import 'dart:async';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
-import 'dart:ui';
-import '../incomeExpenses/incomeexpenses.dart';
 
 Future<List<Album>> fetchAlbum() async {
   final storage = FlutterSecureStorage();
   final accessToken = await storage.read(key: 'access_token');
   print('JWT $accessToken');
-  //await addasset();
+
   final response = await http.get(
       Uri.parse('http://192.168.1.71:8000/assetcategories/?format=json'),
       headers: {
@@ -21,43 +18,26 @@ Future<List<Album>> fetchAlbum() async {
       });
 
   if (response.statusCode == 200) {
-    // If the server did return a 200 OK response,
-    // then parse the JSON.
     Iterable list = json.decode(response.body);
     return List<Album>.from(list.map((model) => Album.fromJson(model)));
-    // return Album.fromJson(jsonDecode(response.body) as Map<String, dynamic>);
   } else {
-    // If the server did not return a 200 OK response,
-    // then throw an exception.
     throw Exception('Failed to load album');
   }
 }
 
 class Album {
-  // final String type; //Income or expenses or asset or liabialiaties.
-  // final String category;
   final int id;
   final String category_name;
-  //final String note;
-  //final DateTime date;
 
   const Album({
-    //required this.type,
-    //required this.category,
     required this.id,
     required this.category_name,
-    //required this.note,
-    //required this.date
   });
 
   factory Album.fromJson(Map<String, dynamic> json) {
     return Album(
-      //type: json['title'],
       id: json['id'],
       category_name: json['category_name'],
-      //note: json['body'],
-      //category: json['body'],
-      // date: DateTime.parse(json['date']),
     );
   }
 }
@@ -91,7 +71,7 @@ class _AiconState extends State<Asset> {
   String selectedType = '';
   int item = 1;
   int value1 = 0;
-  String value2 = 'Empty';
+  String value2 = 'Null';
 
   @override
   Widget build(BuildContext context) {
@@ -148,7 +128,7 @@ class _AiconState extends State<Asset> {
                       showDialog(
                         context: context,
                         builder: (ctx) => AlertDialog(
-                          title: const Text("Add new liabilities:"),
+                          title: const Text("Add new asset:"),
                           content: TextField(
                             controller: _controller1,
                           ),
@@ -241,27 +221,38 @@ class _AiconState extends State<Asset> {
                       style: const ButtonStyle(
                           backgroundColor:
                               MaterialStatePropertyAll(Colors.purple)),
-                      onPressed: () {
-                        value1 = int.parse(_controller2.text);
-                        String value2 = _controller3.text;
-                        print("This is item number $item");
-                        //deleteasset(selectedType);
-                        addasset(value2, value1, selectedDate, item);
-                        _refreshData();
-                        showDialog(
-                            context: context,
-                            builder: (ctx) => AlertDialog(
-                                  title:
-                                      const Text("Asset added successfully:"),
-                                  actions: <Widget>[
-                                    TextButton(
-                                      onPressed: () {
-                                        Navigator.of(ctx).pop();
-                                      },
-                                      child: const Text("Ok"),
-                                    ),
-                                  ],
-                                ));
+                      onPressed: () async {
+                        if (_controller2.text.isNotEmpty) {
+                          value1 = int.parse(_controller2.text);
+                          if (_controller3.text.isNotEmpty) {
+                            value2 = _controller3.text;
+                          }
+                          print("This is item number $item");
+                          //deleteasset(selectedType);
+                          addasset(value2, value1, selectedDate, item);
+                          _refreshData();
+                          showDialog(
+                              context: context,
+                              builder: (ctx) => AlertDialog(
+                                    title:
+                                        const Text("Asset added successfully:"),
+                                    actions: <Widget>[
+                                      TextButton(
+                                        onPressed: () {
+                                          Navigator.of(ctx).pop();
+                                        },
+                                        child: const Text("Ok"),
+                                      ),
+                                    ],
+                                  ));
+                        } else {
+                          // Show an error message if the amount field is empty
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text('Please enter an amount.'),
+                            ),
+                          );
+                        }
                       },
                       child: const Text(
                         "Save",
@@ -283,9 +274,7 @@ class _AiconState extends State<Asset> {
 
 Future<void> addassetc(String category_name) async {
   final storage = FlutterSecureStorage();
-  //String dateAsString = dateOfBirth.toIso8601String().substring(0, 10);
-  //print(dateOfBirth);
-  //String dateAsString = DateFormat('yyyy-MM-dd').format(dateOfBirth);
+
   print("\n$category_name");
 
   Map<String, dynamic> requestBody = {
@@ -294,7 +283,6 @@ Future<void> addassetc(String category_name) async {
   final accessToken = await storage.read(key: 'access_token');
   print('JWT $accessToken');
   await http.post(Uri.parse('http://192.168.1.71:8000/assetcategories/'),
-      //http://127.0.0.1:8000/incomes/
       headers: {
         'Content-Type': 'application/json; charset=UTF-8',
         //'Content-Type': 'application/json',
@@ -306,9 +294,7 @@ Future<void> addassetc(String category_name) async {
 Future<void> addasset(String asset_note, int asset_amount, DateTime asset_date,
     int asset_index) async {
   final storage = FlutterSecureStorage();
-  //String dateAsString = dateOfBirth.toIso8601String().substring(0, 10);
-  //print(dateOfBirth);
-  //String dateAsString = DateFormat('mm/dd/yyyy').format(asset_date);
+
   String dateAsString = DateFormat('yyyy-MM-dd').format(asset_date);
   print("\n$asset_note");
   print("\n$asset_amount");
@@ -324,7 +310,6 @@ Future<void> addasset(String asset_note, int asset_amount, DateTime asset_date,
   final accessToken = await storage.read(key: 'access_token');
   print('JWT $accessToken');
   await http.post(Uri.parse('http://192.168.1.71:8000/assets/'),
-      //http://127.0.0.1:8000/incomes/
       headers: {
         'Content-Type': 'application/json; charset=UTF-8',
         //'Content-Type': 'application/json',

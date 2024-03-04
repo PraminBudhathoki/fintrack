@@ -1,13 +1,10 @@
 import 'dart:io';
-import 'package:fintrack/features/assetLiabialities/assetliabialiaties.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'dart:convert';
 import 'dart:async';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
-import 'dart:ui';
-import '../incomeExpenses/incomeexpenses.dart';
 
 Future<List<Album>> fetchAlbum() async {
   final storage = FlutterSecureStorage();
@@ -74,7 +71,7 @@ class _AiconState extends State<Liabialiaties> {
   String selectedType = '';
   int item = 1;
   int value1 = 0;
-  String value2 = 'Empty';
+  String value2 = 'Null';
 
   @override
   Widget build(BuildContext context) {
@@ -224,28 +221,38 @@ class _AiconState extends State<Liabialiaties> {
                       style: const ButtonStyle(
                           backgroundColor:
                               MaterialStatePropertyAll(Colors.purple)),
-                      onPressed: () {
-                        value1 = int.parse(_controller2.text);
-                        String value2 = _controller3.text;
-                        print("This is item number $item");
-                        //deleteasset(selectedType);
-                        addliability(value2, value1, selectedDate, item);
-                        showDialog(
-                            context: context,
-                            builder: (ctx) => AlertDialog(
-                                  title:
-                                      const Text("Liability added successfully:"),
-                                  actions: <Widget>[
-                                    TextButton(
-                                      onPressed: () {
-                                        Navigator.of(ctx).pop();
-
-                                        _refreshData();
-                                      },
-                                      child: const Text("Ok"),
-                                    ),
-                                  ],
-                                ));
+                      onPressed: () async {
+                        if (_controller2.text.isNotEmpty) {
+                          value1 = int.parse(_controller2.text);
+                          if (_controller3.text.isNotEmpty) {
+                            value2 = _controller3.text;
+                          }
+                          print("This is item number $item");
+                          //deleteasset(selectedType);
+                          addliability(value2, value1, selectedDate, item);
+                          _refreshData();
+                          showDialog(
+                              context: context,
+                              builder: (ctx) => AlertDialog(
+                                    title: const Text(
+                                        "Liability added successfully:"),
+                                    actions: <Widget>[
+                                      TextButton(
+                                        onPressed: () {
+                                          Navigator.of(ctx).pop();
+                                        },
+                                        child: const Text("Ok"),
+                                      ),
+                                    ],
+                                  ));
+                        } else {
+                          // Show an error message if the amount field is empty
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text('Please enter an amount.'),
+                            ),
+                          );
+                        }
                       },
                       child: const Text(
                         "Save",

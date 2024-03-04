@@ -1,53 +1,83 @@
+import 'dart:convert';
+import 'dart:io';
+import 'package:fintrack/features/target/views/EmptyTargetScreen.dart';
+import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 
 class TargetItemScreen extends StatefulWidget {
-  const TargetItemScreen({Key? key}) : super(key: key);
+  final double amount;
+
+  const TargetItemScreen({required this.amount, super.key});
 
   @override
   State<TargetItemScreen> createState() => _TargetItemScreenState();
 }
 
 class _TargetItemScreenState extends State<TargetItemScreen> {
+
   TextEditingController targetNameController = TextEditingController();
   TextEditingController targetAmountController = TextEditingController();
-  DateTime? selectedStartDate;
-  DateTime? selectedDeadline;
+  DateTime selectedStartDate = DateTime.now();
+  DateTime selectedDeadline = DateTime.now().add(const Duration(days: 365));
   String selectedImportance = '';
+  String priority = 'low';
   final index = -1;
+  int targetamount = 0;
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.check),
-            onPressed: () {
-              // Handle check button press
-              Navigator.pop(context);
-            },
-          )
-        ],
-        elevation: 0.0,
-        title: Text(
-          'Target item',
-          style: GoogleFonts.lato(fontWeight: FontWeight.w600),
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: Scaffold(
+        appBar: AppBar(
+          actions: [
+            IconButton(
+              icon: const Icon(Icons.check),
+              onPressed: () async {
+                //double add_defaule = snapshot.data.
+                String targetname = targetNameController.text;
+                targetamount = int.parse(targetAmountController.text);
+                await addtarget(targetname, targetamount, priority,
+                    selectedStartDate, selectedDeadline);
+                double addedamount = 0.0;
+                double sendwill = widget.amount + addedamount;
+                print("sendwill is $sendwill");
+                //widget.amount = widget.amount + addedamount;
+                await editTargetWallet(sendwill);
+                // Handle check button press
+                //Navigator.pop(context);
+                // ignore: use_build_context_synchronously
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => const EmptyTargetScreen(),
+                  ),
+                );
+              },
+            )
+           
+          ],
+          elevation: 0.0,
+          title: Text(
+            'Target item',
+            style: GoogleFonts.lato(fontWeight: FontWeight.w600),
+          ),
         ),
-      ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          _buildText('Target Name', fontSize: 28.0),
-          _buildTextField(targetNameController, 'like House, Mobile, etc'),
-          _buildText('Target Amount', fontSize: 28.0),
-          _buildTextField(targetAmountController, 'Rs.20000..'),
-          _buildText('Importance', fontSize: 28.0),
-          _buildImportanceChips(),
-          _buildDateTimeRow('Start Date', selectedStartDate),
-          _buildDateTimeRow('Deadline', selectedDeadline),
-        ],
+        body: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            _buildText('Target Name', fontSize: 28.0),
+            _buildTextField(targetNameController, 'like House, Mobile, etc'),
+            _buildText('Target Amount', fontSize: 28.0),
+            _buildTextField(targetAmountController, 'Rs.20000..'),
+            _buildText('Priority', fontSize: 28.0),
+            _buildImportanceChips(),
+            _buildDateTimeRow('Start Date', selectedStartDate),
+            _buildDateTimeRow('Deadline', selectedDeadline),
+          ],
+        ),
       ),
     );
   }
@@ -69,10 +99,10 @@ class _TargetItemScreenState extends State<TargetItemScreen> {
         enabledBorder: const UnderlineInputBorder(
           borderSide: BorderSide(color: Colors.white),
         ),
-        focusedBorder: UnderlineInputBorder(
+        focusedBorder: const UnderlineInputBorder(
           borderSide: BorderSide(color: Colors.black),
         ),
-        border: UnderlineInputBorder(
+        border: const UnderlineInputBorder(
           borderSide: BorderSide(color: Colors.black),
         ),
       ),
@@ -84,8 +114,8 @@ class _TargetItemScreenState extends State<TargetItemScreen> {
       spacing: 10.0,
       children: [
         _buildChoiceChip('High'),
-        _buildChoiceChip('Low'),
         _buildChoiceChip('Medium'),
+        _buildChoiceChip('Low'),
       ],
     );
   }
@@ -98,12 +128,15 @@ class _TargetItemScreenState extends State<TargetItemScreen> {
         onSelected: (bool selected) {
           setState(() {
             selectedImportance = selected ? label : '';
+            priority = label.toLowerCase();
           });
         },
         selectedColor: Colors.pink, // Highlight color
       ),
-      onTap: (){
-
+      onTap: () {
+        //priority = selectedImportance;
+        print("Ontab priority $priority");
+        print("Ontab selectedImportance $selectedImportance");
       },
     );
   }
@@ -142,4 +175,93 @@ class _TargetItemScreenState extends State<TargetItemScreen> {
       ],
     );
   }
+}
+
+Future<void> addtarget(String targetName, int targetAmount, String priority,
+    DateTime startDate, DateTime deadline) async {
+  print("\n$priority");
+  String prioritys = '';
+
+  if (priority == 'high') {
+    prioritys = 'H';
+  } else if (priority == 'medium') {
+    prioritys = 'M';
+  } else {
+    prioritys = 'L';
+  }
+  final storage = const FlutterSecureStorage();
+
+  String dateAsString1 = startDate.toIso8601String();
+  String dateAsString2 = deadline.toIso8601String();
+
+  // String dateAsString1 = DateFormat('yyyy-MM-dd').format(startDate);
+  // String dateAsString2 = DateFormat('yyyy-MM-dd').format(deadline);
+  print("\n$targetName");
+  print("\n$targetAmount");
+  print("\n$priority");
+  print("\n$prioritys");
+  print("\n$startDate");
+  print("\n$deadline");
+
+  Map<String, dynamic> requestBody = {
+    'target_name': targetName,
+    'current_amount': 0.0,
+    'target_amount': targetAmount.toDouble(),
+    'target_add_date': dateAsString1.toString(),
+    'target_deadline': dateAsString2.toString(),
+    'target_status': 'INCP',
+    // 'target_priority': priority,
+    'target_priority': prioritys,
+  };
+  final accessToken = await storage.read(key: 'access_token');
+  print('JWT $accessToken');
+  await http.post(Uri.parse('http://192.168.1.71:8000/targets/'),
+      headers: {
+        'Content-Type': 'application/json; charset=UTF-8',
+        //'Content-Type': 'application/json',
+        'Authorization': 'JWT $accessToken'
+      },
+      body: jsonEncode(requestBody));
+}
+
+// Future<void> editTargetWallet(double editedamount) async {
+//   final storage = FlutterSecureStorage();
+
+//   print("\n$editedamount");
+
+//   Map<String, dynamic> requestBody = {
+//     'amount': editedamount,
+//     // You might need to include other fields if required by your backend
+//   };
+//   final accessToken = await storage.read(key: 'access_token');
+//   print('JWT $accessToken');
+//   await http.put(
+//     Uri.parse('http://192.168.1.71:8000/targetwallet/update/'),
+//     headers: {
+//       'Content-Type': 'application/json; charset=UTF-8',
+//       'Authorization': 'JWT $accessToken',
+//     },
+//     body: jsonEncode(requestBody),
+//   );
+// }
+
+Future<void> editTargetWallet(double editedamount) async {
+  final storage = const FlutterSecureStorage();
+
+  print("\n$editedamount");
+
+  Map<String, dynamic> requestBody = {
+    'amount': editedamount,
+    // You might need to include other fields if required by your backend
+  };
+  final accessToken = await storage.read(key: 'access_token');
+  print('JWT $accessToken');
+  await http.put(
+    Uri.parse('http://192.168.1.71:8000/targetwallet/update/'),
+    headers: {
+      'Content-Type': 'application/json; charset=UTF-8',
+      'Authorization': 'JWT $accessToken',
+    },
+    body: jsonEncode(requestBody),
+  );
 }

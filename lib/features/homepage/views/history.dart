@@ -139,10 +139,11 @@ class _MyAppState extends State<History> {
                                       TextButton(
                                         onPressed: () {
                                           deleteData(type, ids);
-                                          _refreshData();
+
                                           setState(() {
                                             futureAlbum = fetchAlbum();
                                           });
+                                          _refreshData();
                                           Navigator.of(context).pop();
                                         },
                                         child: const Text('Delete'),

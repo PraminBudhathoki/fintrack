@@ -687,6 +687,7 @@ void _showBottomSheet(BuildContext context, index) {
       final note = TextEditingController();
       //DateTime selectedDeadline = DateTime.now();
       DateTime selectedDate = DateTime.now();
+      String value2 = 'Null';
       String type = "Expenses";
       //String category;
       //String type = "Expenses";
@@ -812,11 +813,31 @@ void _showBottomSheet(BuildContext context, index) {
                         backgroundColor:
                             MaterialStateProperty.all<Color>(Colors.purple),
                       ),
-                      onPressed: () {
-                        int value1 = int.parse(amount.text);
-                        String value2 = note.text;
-                        createAlbum(type, index, value1, value2, selectedDate);
-                        Navigator.of(context).pop();
+                      onPressed: () async {
+                        if (amount.text.isNotEmpty) {
+                          int value1 = int.parse(amount.text);
+                          if (note.text.isNotEmpty) {
+                            value2 = note.text;
+                          }
+
+                          createAlbum(
+                              type, index, value1, value2, selectedDate);
+                          Navigator.of(context).pop();
+                        } else {
+                          showDialog(
+                              context: context,
+                              builder: (ctx) => AlertDialog(
+                                    title: const Text("Please enter amount:"),
+                                    actions: <Widget>[
+                                      TextButton(
+                                        onPressed: () {
+                                          Navigator.of(ctx).pop();
+                                        },
+                                        child: const Text("Ok"),
+                                      ),
+                                    ],
+                                  ));
+                        }
                       },
                       child: const Text("Ok",
                           style: TextStyle(color: Colors.white)),
